@@ -1,16 +1,20 @@
 #ifndef GLOBALS_H_MZFRZ076
 #define GLOBALS_H_MZFRZ076
 
+#include <stdint.h>
+
 namespace Radon {
 
 /* dataset (e.g. "simple", "heart", "vote") */
-const char *kDataset = "simple";
+extern const char *kDataset;
 
-const char *kDatasetPath = "../datasets";
+extern const char *kDatasetPath;
 
-const char *kTestFlag = "-test";
-const char *kTrainFlag = "-train";
-const char *kExtension = ".txt";
+extern const char *kTestFlag;
+extern const char *kTrainFlag;
+extern const char *kExtension;
+
+extern const uint32_t kVarValues;
 
 } /* end of namespace Radon */
 

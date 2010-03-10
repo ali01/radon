@@ -11,14 +11,14 @@ public:
   typedef Simone::Ptr<const LRClassifier> PtrConst;
   typedef Simone::Ptr<LRClassifier> Ptr;
 
-  static Ptr LRClassifierNew() { return new LRClassifier(); }
+  static Ptr LRClassifierNew(DatasetDescription::PtrConst training_data) {
+    return new LRClassifier(training_data);
+  }
 
   PredictionSet::PtrConst predictionSet() { return NULL; }
 
 private:
-  LRClassifier() {}
-
-  LRPredictionSet::Ptr prediction_set_;
+  LRClassifier(DatasetDescription::PtrConst training_data);
 
   /* disallowed operations */
   LRClassifier(const LRClassifier&);

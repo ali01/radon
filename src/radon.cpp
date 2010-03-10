@@ -40,15 +40,13 @@ int main() {
                                                  Radon::kTestFlag +
                                                  filepath_suffix);
 
-  nb_classifier = NBClassifier::NBClassifierNew();
-  nb_classifier->trainDatasetIs(train_dataset);
+  nb_classifier = NBClassifier::NBClassifierNew(train_dataset);
   nb_classifier->testDatasetIs(test_dataset);
 
   nb_mle_prediction = nb_classifier->predictionSet(NBClassifier::kML);
   nb_laplace_prediction = nb_classifier->predictionSet(NBClassifier::kLaplace);
 
-  lr_classifier = LRClassifier::LRClassifierNew();
-  lr_classifier->trainDatasetIs(train_dataset);
+  lr_classifier = LRClassifier::LRClassifierNew(train_dataset);
   lr_classifier->testDatasetIs(test_dataset);
 
   lr_prediction = lr_classifier->predictionSet();

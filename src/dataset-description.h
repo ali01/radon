@@ -13,7 +13,7 @@ using boost::multi_array;
 using Simone::Vector;
 
 #include "observation.h"
-#include "outcome.h"
+#include "variable.h"
 
 namespace Radon {
 
@@ -23,18 +23,22 @@ public:
   typedef Simone::Ptr<const DatasetDescription> PtrConst;
   typedef Simone::Ptr<DatasetDescription> Ptr;
 
-  static PtrConst DatasetDescriptionNew(uint32_t _data_vectors, uint32_t _vars,
-                                        uint32_t _var_values=2) {
-    return new DatasetDescription(_data_vectors, _var_values, _var_values);
+  static PtrConst DatasetDescriptionNew(uint32_t data_vectors, uint32_t vars) {
+    return new DatasetDescription(data_vectors, vars);
   }
 
+  uint32_t vectorCount() const { return data_vectors_; }
+  uint32_t varCount() const { return vars_; }
+
 private:
-  DatasetDescription(uint32_t _data_vectors, uint32_t _vars,
-                     uint32_t _var_values);
+  DatasetDescription(uint32_t data_vectors, uint32_t vars);
 
   /* data members */
-  multi_array<Observation::Ptr,3> observation_;
-  Vector<Outcome::PtrConst> outcome_;
+  multi_array<Variable::PtrConst,2> data_;
+  Vector<Variable::PtrConst> output_;
+
+  uint32_t data_vectors_;
+  uint32_t vars_;
 
   /* disallowed operations */
   DatasetDescription(const DatasetDescription&);

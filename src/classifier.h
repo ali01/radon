@@ -13,18 +13,21 @@ public:
   typedef Simone::Ptr<const Classifier> PtrConst;
   typedef Simone::Ptr<Classifier> Ptr;
 
-  void trainDatasetIs(DatasetDescription::PtrConst _data);
   void testDatasetIs(DatasetDescription::PtrConst _data);
 
   virtual PredictionSet::PtrConst predictionSet() = 0;
+
 protected:
-  Classifier() {}
+  Classifier(DatasetDescription::PtrConst _data);
   virtual ~Classifier() {}
 
-  /* data members */
-  DatasetDescription::PtrConst train_data_;
-  DatasetDescription::PtrConst test_data_;
+  /* protected member functions */
+  uint32_t vectorCount() const { return training_data_->vectorCount(); }
+  uint32_t varCount() const { return training_data_->varCount(); }
 
+  /* data members */
+  DatasetDescription::PtrConst training_data_;
+  DatasetDescription::PtrConst test_data_;
   PredictionSet::PtrConst prediction_set_;
 
 private:

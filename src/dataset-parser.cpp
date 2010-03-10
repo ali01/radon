@@ -5,6 +5,8 @@ using std::ifstream;
 
 #include <simone/utility.h>
 
+#include "variable.h"
+
 namespace Radon {
 
 DatasetDescription::PtrConst
@@ -22,22 +24,22 @@ DatasetParser::datasetDescription(const string &_filepath) const {
   dataset = const_cast<DatasetDescription *>(dataset_const.ptr());
 
   uint32_t value;
-  Outcome::PtrConst outcome;
+  Variable::PtrConst output;
 
   for (uint32_t vec = 0; vec < data_vectors; ++vec) {
     /* parse inpupt vector data and populate dataset */
     for (uint32_t var = 0; var < vars; ++var) {
       data_stream >> value;
-      dataset->observation_[vec][var][value]->frequencyInc();
+      dataset->data_[vec][var] = Variable::VariableNew(value);
     }
 
     /* ignore colon separator */
     data_stream.ignore(std::numeric_limits<std::streamsize>::max(), ':');
 
-    /* parse expected outcome */
+    /* parse expected output */
     data_stream >> value;
-    outcome = Outcome::OutcomeNew(value);
-    dataset->outcome_.pushBack(outcome);
+    output = Variable::VariableNew(value);
+    dataset->output_.pushBack(output);
 
     /* ignore new line character */
     if (!data_stream.eof())
