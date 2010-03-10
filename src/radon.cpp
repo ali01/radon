@@ -9,12 +9,12 @@ using std::string;
 #include "dataset-description.h"
 #include "lr-classifier.h"
 #include "nb-classifier.h"
-#include "prediction.h"
+#include "prediction-set.h"
 using Radon::DatasetParser;
 using Radon::DatasetDescription;
 using Radon::LRClassifier;
 using Radon::NBClassifier;
-using Radon::Prediction;
+using Radon::PredictionSet;
 
 int main() {
   string filepath_prefix, filepath_suffix;
@@ -22,7 +22,7 @@ int main() {
   DatasetParser::Ptr data_parser;
   NBClassifier::Ptr nb_classifier;
   LRClassifier::Ptr lr_classifier;
-  Prediction::Ptr nb_mle_prediction, nb_laplace_prediction, lr_prediction;
+  PredictionSet::Ptr nb_mle_prediction, nb_laplace_prediction, lr_prediction;
 
   filepath_prefix =  Radon::kDatasetPath;
   filepath_prefix += "/";
@@ -43,12 +43,12 @@ int main() {
   nb_classifier->trainDatasetIs(train_dataset);
   nb_classifier->testDatasetIs(test_dataset);
 
-  nb_mle_prediction = nb_classifier->prediction(NBClassifier::kML);
-  nb_laplace_prediction = nb_classifier->prediction(NBClassifier::kLaplace);
+  nb_mle_prediction = nb_classifier->predictionSet(NBClassifier::kML);
+  nb_laplace_prediction = nb_classifier->predictionSet(NBClassifier::kLaplace);
 
   lr_classifier = LRClassifier::LRClassifierNew();
   lr_classifier->trainDatasetIs(train_dataset);
   lr_classifier->testDatasetIs(test_dataset);
 
-  lr_prediction = lr_classifier->prediction();
+  lr_prediction = lr_classifier->predictionSet();
 }
