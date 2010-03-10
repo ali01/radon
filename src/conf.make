@@ -1,0 +1,2 @@
+PROJECT := radon
+CPPFLAGS += -I.
