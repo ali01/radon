@@ -14,7 +14,8 @@ extern const char *kTestFlag;
 extern const char *kTrainFlag;
 extern const char *kExtension;
 
-extern const uint32_t kVarValues;
+extern const uint32_t kNumVarValues;
+extern const uint32_t kNumOutputValues;
 
 } /* end of namespace Radon */
 

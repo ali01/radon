@@ -24,13 +24,12 @@ DatasetParser::datasetDescription(const string &_filepath) const {
   dataset = const_cast<DatasetDescription *>(dataset_const.ptr());
 
   uint32_t value;
-  Variable::PtrConst output;
 
   for (uint32_t vec = 0; vec < data_vectors; ++vec) {
     /* parse inpupt vector data and populate dataset */
     for (uint32_t var = 0; var < vars; ++var) {
       data_stream >> value;
-      dataset->data_[vec][var] = Variable::VariableNew(value);
+      dataset->data_[vec][var] = value;
     }
 
     /* ignore colon separator */
@@ -38,8 +37,7 @@ DatasetParser::datasetDescription(const string &_filepath) const {
 
     /* parse expected output */
     data_stream >> value;
-    output = Variable::VariableNew(value);
-    dataset->output_.pushBack(output);
+    dataset->output_.pushBack(value);
 
     /* ignore new line character */
     if (!data_stream.eof())

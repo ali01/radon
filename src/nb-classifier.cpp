@@ -8,7 +8,7 @@ namespace Radon {
 NBClassifier::NBClassifier(DatasetDescription::PtrConst training_data) :
   Classifier(training_data)
 {
-
+  
 }
 
 PredictionSet::PtrConst

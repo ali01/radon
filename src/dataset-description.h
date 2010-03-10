@@ -34,8 +34,8 @@ private:
   DatasetDescription(uint32_t data_vectors, uint32_t vars);
 
   /* data members */
-  multi_array<Variable::PtrConst,2> data_;
-  Vector<Variable::PtrConst> output_;
+  multi_array<Variable,2> data_;
+  Vector<Variable> output_;
 
   uint32_t data_vectors_;
   uint32_t vars_;

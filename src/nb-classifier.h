@@ -8,6 +8,7 @@
 
 #include "classifier.h"
 #include "dataset-description.h"
+#include "joint-dist-table.h"
 
 namespace Radon {
 
@@ -37,7 +38,7 @@ private:
   PredictionSet::PtrConst compute_prediction_set(EstMode _mode);
 
   /* data members */
-  Vector<multi_array<Observation::Ptr,2> > data_map_;
+  Vector<JointDistTable::Ptr> freq_map_;
 
   /* disallowed operations */
   NBClassifier(const NBClassifier&);

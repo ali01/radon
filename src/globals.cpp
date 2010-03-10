@@ -11,6 +11,7 @@ const char *kTestFlag = "-test";
 const char *kTrainFlag = "-train";
 const char *kExtension = ".txt";
 
-const uint32_t kVarValues = 2;
+const uint32_t kNumVarValues = 2;
+const uint32_t kNumOutputValues = 2;
 
 } /* end of namespace Radon */
