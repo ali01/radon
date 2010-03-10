@@ -9,25 +9,32 @@ using std::string;
 using boost::multi_array;
 
 #include <simone/ptr_interface.h>
+#include <simone/vector.h>
+using Simone::Vector;
 
-#include "data-point.h"
+#include "observation.h"
+#include "outcome.h"
 
 namespace Radon {
 
 class DatasetDescription : public Simone::PtrInterface<DatasetDescription> {
+  friend class DatasetParser;
 public:
   typedef Simone::Ptr<const DatasetDescription> PtrConst;
   typedef Simone::Ptr<DatasetDescription> Ptr;
 
-  static Ptr DatasetDescriptionNew(const string &filename) {
-    return new DatasetDescription(filename);
+  static Ptr DatasetDescriptionNew(uint32_t _data_vectors, uint32_t _vars,
+                                   uint32_t _var_values=2) {
+    return new DatasetDescription(_data_vectors, _var_values, _var_values);
   }
 
 private:
-  DatasetDescription(const string &filename);
+  DatasetDescription(uint32_t _data_vectors, uint32_t _vars,
+                     uint32_t _var_values);
 
   /* data members */
-  multi_array<DataPoint::Ptr,3> data_set_;
+  multi_array<Observation::Ptr,3> observation_;
+  Vector<Outcome::Ptr> outcome_;
 
   /* disallowed operations */
   DatasetDescription(const DatasetDescription&);
