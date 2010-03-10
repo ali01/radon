@@ -19,11 +19,16 @@ public:
 
   static Ptr NBClassifierNew() { return new NBClassifier(); }
 
-  PredictionSet::Ptr predictionSet() { return predictionSet(kLaplace); }
-  PredictionSet::Ptr predictionSet(EstMode _mode);
+  PredictionSet::PtrConst predictionSet(EstMode _mode);
 
 private:
   NBClassifier() {}
+
+  /* override base class virtual function */
+  PredictionSet::PtrConst predictionSet() { return predictionSet(kLaplace); }
+
+  void train_algorithm(EstMode _mode);
+  PredictionSet::PtrConst compute_prediction_set(EstMode _mode);
 
   /* disallowed operations */
   NBClassifier(const NBClassifier&);

@@ -7,21 +7,22 @@ using std::ifstream;
 
 namespace Radon {
 
-DatasetDescription::Ptr
-DatasetParser::datasetDescription(const string &_filepath) {
-  DatasetDescription::Ptr dataset;
-  uint32_t data_vectors, vars;
-
+DatasetDescription::PtrConst
+DatasetParser::datasetDescription(const string &_filepath) const {
   ifstream data_stream(_filepath.c_str());
+  uint32_t data_vectors, vars;
+  DatasetDescription::PtrConst dataset_const;
+  DatasetDescription::Ptr dataset;
 
   data_stream >> vars;
   data_stream >> data_vectors;
 
-  dataset = DatasetDescription::DatasetDescriptionNew(data_vectors, vars);
+  /* const_cast friend dataset for initialization */
+  dataset_const = DatasetDescription::DatasetDescriptionNew(data_vectors, vars);
+  dataset = const_cast<DatasetDescription *>(dataset_const.ptr());
 
-  string line;
   uint32_t value;
-  Outcome::Ptr outcome;
+  Outcome::PtrConst outcome;
 
   for (uint32_t vec = 0; vec < data_vectors; ++vec) {
     /* parse inpupt vector data and populate dataset */

@@ -13,7 +13,7 @@ public:
 
   static Ptr LRClassifierNew() { return new LRClassifier(); }
 
-  PredictionSet::Ptr predictionSet() { return NULL; }
+  PredictionSet::PtrConst predictionSet() { return NULL; }
 
 private:
   LRClassifier() {}

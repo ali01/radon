@@ -18,11 +18,12 @@ using Radon::PredictionSet;
 
 int main() {
   string filepath_prefix, filepath_suffix;
-  DatasetDescription::Ptr train_dataset, test_dataset;
-  DatasetParser::Ptr data_parser;
+  DatasetDescription::PtrConst train_dataset, test_dataset;
+  DatasetParser::PtrConst data_parser;
   NBClassifier::Ptr nb_classifier;
   LRClassifier::Ptr lr_classifier;
-  PredictionSet::Ptr nb_mle_prediction, nb_laplace_prediction, lr_prediction;
+  PredictionSet::PtrConst nb_mle_prediction, nb_laplace_prediction,
+                          lr_prediction;
 
   filepath_prefix =  Radon::kDatasetPath;
   filepath_prefix += "/";

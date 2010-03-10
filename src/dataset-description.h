@@ -23,8 +23,8 @@ public:
   typedef Simone::Ptr<const DatasetDescription> PtrConst;
   typedef Simone::Ptr<DatasetDescription> Ptr;
 
-  static Ptr DatasetDescriptionNew(uint32_t _data_vectors, uint32_t _vars,
-                                   uint32_t _var_values=2) {
+  static PtrConst DatasetDescriptionNew(uint32_t _data_vectors, uint32_t _vars,
+                                        uint32_t _var_values=2) {
     return new DatasetDescription(_data_vectors, _var_values, _var_values);
   }
 
@@ -34,7 +34,7 @@ private:
 
   /* data members */
   multi_array<Observation::Ptr,3> observation_;
-  Vector<Outcome::Ptr> outcome_;
+  Vector<Outcome::PtrConst> outcome_;
 
   /* disallowed operations */
   DatasetDescription(const DatasetDescription&);

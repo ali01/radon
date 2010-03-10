@@ -8,9 +8,8 @@ namespace Radon {
 class Outcome : public Simone::PtrInterface<Outcome> {
 public:
   typedef Simone::Ptr<const Outcome> PtrConst;
-  typedef Simone::Ptr<Outcome> Ptr;
 
-  static Ptr OutcomeNew(uint32_t _value) {
+  static PtrConst OutcomeNew(uint32_t _value) {
     return new Outcome(_value);
   }
 

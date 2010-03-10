@@ -13,11 +13,11 @@ namespace Radon {
 class DatasetParser : public Simone::PtrInterface<DatasetParser> {
 public:
   typedef Simone::Ptr<const DatasetParser> PtrConst;
-  typedef Simone::Ptr<DatasetParser> Ptr;
 
-  static Ptr DatasetParserNew() { return new DatasetParser(); }
+  static PtrConst DatasetParserNew() { return new DatasetParser(); }
 
-  DatasetDescription::Ptr datasetDescription(const string &_filepath);
+  DatasetDescription::PtrConst
+    datasetDescription(const string &_filepath) const;
 
 private:
   DatasetParser() {}

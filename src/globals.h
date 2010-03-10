@@ -3,12 +3,14 @@
 
 namespace Radon {
 
-const char *kDatasetPath = "../datasets";
-const char *kDataset     = "simple";
+/* dataset (e.g. "simple", "heart", "vote") */
+const char *kDataset = "simple";
 
-const char *kTestFlag    = "-test";
-const char *kTrainFlag   = "-train";
-const char *kExtension   = ".txt";
+const char *kDatasetPath = "../datasets";
+
+const char *kTestFlag = "-test";
+const char *kTrainFlag = "-train";
+const char *kExtension = ".txt";
 
 } /* end of namespace Radon */
 

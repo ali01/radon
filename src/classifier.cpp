@@ -3,7 +3,7 @@
 namespace Radon {
 
 void
-Classifier::trainDatasetIs(DatasetDescription::Ptr _data) {
+Classifier::trainDatasetIs(DatasetDescription::PtrConst _data) {
   if (_data == NULL || train_data_ != _data)
     prediction_set_ = NULL;
 
@@ -11,7 +11,7 @@ Classifier::trainDatasetIs(DatasetDescription::Ptr _data) {
 }
 
 void
-Classifier::testDatasetIs(DatasetDescription::Ptr _data) {
+Classifier::testDatasetIs(DatasetDescription::PtrConst _data) {
   if (_data == NULL || test_data_ != _data)
     prediction_set_ = NULL;
 

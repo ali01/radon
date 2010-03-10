@@ -13,19 +13,19 @@ public:
   typedef Simone::Ptr<const Classifier> PtrConst;
   typedef Simone::Ptr<Classifier> Ptr;
 
-  void trainDatasetIs(DatasetDescription::Ptr _data);
-  void testDatasetIs(DatasetDescription::Ptr _data);
+  void trainDatasetIs(DatasetDescription::PtrConst _data);
+  void testDatasetIs(DatasetDescription::PtrConst _data);
 
-  virtual PredictionSet::Ptr predictionSet() = 0;
+  virtual PredictionSet::PtrConst predictionSet() = 0;
 protected:
   Classifier() {}
   virtual ~Classifier() {}
 
   /* data members */
-  DatasetDescription::Ptr train_data_;
-  DatasetDescription::Ptr test_data_;
+  DatasetDescription::PtrConst train_data_;
+  DatasetDescription::PtrConst test_data_;
 
-  PredictionSet::Ptr prediction_set_;
+  PredictionSet::PtrConst prediction_set_;
 
 private:
   /* disallowed operations */
