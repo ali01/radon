@@ -5,7 +5,7 @@
 
 namespace Radon {
 
-class Prediction : Simone::PtrInterface<Prediction> {
+class Prediction : public Simone::PtrInterface<Prediction> {
 public:
   typedef Simone::Ptr<const Prediction> PtrConst;
   typedef Simone::Ptr<Prediction> Ptr;
@@ -13,6 +13,7 @@ public:
   static Ptr PredictionNew() { return new Prediction(); }
 
 private:
+  Prediction();
 
   /* disallowed operations */
   Prediction(const Prediction&);

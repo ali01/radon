@@ -5,6 +5,8 @@
 #include <simone/vector.h>
 using Simone::Vector;
 
+#include "prediction.h"
+
 namespace Radon {
 
 class PredictionSet : public Simone::PtrInterface<PredictionSet> {
