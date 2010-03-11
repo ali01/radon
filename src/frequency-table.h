@@ -15,16 +15,16 @@ public:
   typedef Simone::Ptr<const FrequencyTable> PtrConst;
   typedef Simone::Ptr<FrequencyTable> Ptr;
 
-  static Ptr FrequencyTableNew(uint32_t vars, uint32_t vals) {
-    return new FrequencyTable(vars, vals);
+  static Ptr FrequencyTableNew(uint32_t var_vals, uint32_t output_vals) {
+    return new FrequencyTable(var_vals, output_vals);
   }
 
-  uint32_t frequency(uint32_t var, uint32_t out) const;
-  void frequencyIs(uint32_t var, uint32_t out, uint32_t value);
-  void frequencyInc(uint32_t var, uint32_t out);
-  void frequencyDec(uint32_t var, uint32_t out);
+  uint32_t frequency(uint32_t var_val, uint32_t out_val) const;
+  void frequencyIs(uint32_t var_val, uint32_t out_val, uint32_t freq);
+  void frequencyInc(uint32_t var_val, uint32_t out_val);
+  void frequencyDec(uint32_t var_val, uint32_t out_val);
 private:
-  FrequencyTable(uint32_t vars, uint32_t vals);
+  FrequencyTable(uint32_t var_vals, uint32_t output_vals);
 
   /* data members */
   multi_array<Frequency::Ptr,2> freq_table_;
