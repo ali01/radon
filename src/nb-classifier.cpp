@@ -10,6 +10,7 @@ NBClassifier::NBClassifier(DatasetDescription::PtrConst training_data) :
   Classifier(training_data)
 {
   FrequencyTable::Ptr freq_table;
+  JointDistTable::Ptr dist_table;
   Observation in_value, output_value;
   for (uint32_t var = 0; var < training_data_->varCount(); ++var) {
     /* creating frequency table for singlge variable */
@@ -24,8 +25,10 @@ NBClassifier::NBClassifier(DatasetDescription::PtrConst training_data) :
     }
 
     /* converting frequency table into a joint probability distribution table */
+    dist_table = JointDistTable::JointDistTableNew(freq_table);
 
-    // dist_map_.pushBack(freq_table);
+    /* add distribution table to model */
+    dist_map_.pushBack(dist_table);
   }
 }
 
