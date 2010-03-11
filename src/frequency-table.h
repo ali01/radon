@@ -19,13 +19,14 @@ public:
     return new FrequencyTable(domain_size, range_size);
   }
 
-  uint32_t frequency(uint32_t in_val, uint32_t out_val) const;
-  void frequencyIs(uint32_t in_val, uint32_t out_val, uint32_t freq);
   void frequencyInc(uint32_t in_val, uint32_t out_val);
   void frequencyDec(uint32_t in_val, uint32_t out_val);
 
+  uint32_t frequency(uint32_t in_val, uint32_t out_val) const;
   uint32_t domainSize() const { return domain_size_; }
   uint32_t rangeSize() const { return range_size_; }
+  uint32_t count() const { return count_; }
+
 private:
   FrequencyTable(uint32_t domain_size, uint32_t range_size);
 
@@ -34,6 +35,7 @@ private:
 
   uint32_t domain_size_;
   uint32_t range_size_;
+  uint32_t count_;
 
   /* operations disallowed */
   FrequencyTable(const FrequencyTable&);

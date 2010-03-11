@@ -6,8 +6,8 @@ using boost::multi_array;
 
 #include <simone/ptr_interface.h>
 
-#include "frequency.h"
 #include "frequency-table.h"
+#include "probability.h"
 
 namespace Radon {
 
@@ -24,7 +24,7 @@ private:
   JointDistTable(FrequencyTable::Ptr _freq_table);
 
   /* data members */
-  multi_array<Frequency::Ptr,2> prob_table_;
+  multi_array<Probability,2> prob_table_;
 
   /* disallowed operations */
   JointDistTable(const JointDistTable&);
