@@ -38,7 +38,7 @@ private:
   PredictionSet::PtrConst compute_prediction_set(EstMode _mode);
 
   /* data members */
-  Vector<JointDistTable::Ptr> freq_map_;
+  Vector<JointDistTable::Ptr> dist_map_;
 
   /* disallowed operations */
   NBClassifier(const NBClassifier&);

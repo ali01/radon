@@ -21,10 +21,6 @@ protected:
   Classifier(DatasetDescription::PtrConst _data);
   virtual ~Classifier() {}
 
-  /* protected member functions */
-  uint32_t vectorCount() const { return training_data_->vectorCount(); }
-  uint32_t varCount() const { return training_data_->varCount(); }
-
   /* data members */
   DatasetDescription::PtrConst training_data_;
   DatasetDescription::PtrConst test_data_;

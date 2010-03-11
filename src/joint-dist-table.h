@@ -6,6 +6,8 @@ using boost::multi_array;
 
 #include <simone/ptr_interface.h>
 
+#include "frequency-table.h"
+
 namespace Radon {
 
 class JointDistTable : public Simone::PtrInterface<JointDistTable> {
@@ -13,7 +15,9 @@ public:
   typedef Simone::Ptr<const JointDistTable> Ptr;
   typedef Simone::Ptr<JointDistTable> PtrConst;
 
-  static Ptr JointDistTableNew() { return new JointDistTable(); }
+  static Ptr JointDistTableNew() {
+    return new JointDistTable();
+  }
 
 private:
   JointDistTable();
