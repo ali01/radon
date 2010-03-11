@@ -6,8 +6,6 @@ using boost::multi_array;
 
 #include <simone/ptr_interface.h>
 
-#include "observation.h"
-
 namespace Radon {
 
 class JointDistTable : public Simone::PtrInterface<JointDistTable> {
@@ -17,18 +15,11 @@ public:
 
   static Ptr JointDistTableNew() { return new JointDistTable(); }
 
-  Observation::PtrConst observation(uint32_t var, uint32_t out) const;
-
-  uint32_t observationFreq(uint32_t var, uint32_t out) const;
-  void observationFreqIs(uint32_t var, uint32_t out, uint32_t value);
-  void observationFreqInc(uint32_t var, uint32_t out);
-  void observationFreqDec(uint32_t var, uint32_t out);
-
 private:
   JointDistTable();
 
   /* data members */
-  multi_array<Observation::Ptr,2> dist_table_;
+  // multi_array<Observation::Ptr,2> prob_table_;
 
   /* disallowed operations */
   JointDistTable(const JointDistTable&);
