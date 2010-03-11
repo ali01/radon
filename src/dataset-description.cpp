@@ -9,4 +9,14 @@ DatasetDescription::DatasetDescription(uint32_t _data_vectors, uint32_t _vars) :
   data_vectors_(_data_vectors),
   vars_(_vars) {}
 
+const Observation&
+DatasetDescription::inputObservation(uint32_t data_vector, uint32_t var) {
+  return data_[data_vector][var];
+}
+
+const Observation&
+DatasetDescription::outputObservation(uint32_t data_vector) {
+  return output_[data_vector];
+}
+
 } /* end of namespace Radon */

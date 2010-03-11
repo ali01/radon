@@ -27,6 +27,9 @@ public:
     return new DatasetDescription(data_vectors, vars);
   }
 
+  const Observation& inputObservation(uint32_t data_vector, uint32_t var);
+  const Observation& outputObservation(uint32_t data_vector);
+
   uint32_t vectorCount() const { return data_vectors_; }
   uint32_t varCount() const { return vars_; }
 
