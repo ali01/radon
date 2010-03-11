@@ -5,12 +5,13 @@
 
 namespace Radon {
 
-JointDistTable::JointDistTable() //:
-  // prob_table_(boost::extents[kNumVarValues][kNumOutputValues])
+JointDistTable::JointDistTable(FrequencyTable::Ptr _freq_table) :
+  prob_table_(boost::extents[_freq_table->domainSize()]
+                            [_freq_table->rangeSize()])
 {
-  for (uint32_t var = 0; var < kNumVarValues; ++var) {
-    for (uint32_t out = 0; out < kNumOutputValues; ++out) {
-      // prob_table_[var][out] = Frequency::FrequencyNew();
+  for (uint32_t in_val = 0; in_val < _freq_table->domainSize(); ++in_val) {
+    for (uint32_t out_val = 0; out_val < _freq_table->rangeSize(); ++out_val) {
+      // prob_table_[in_val][out_val] = Frequency::FrequencyNew();
     }
   }
 }

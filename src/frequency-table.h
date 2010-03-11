@@ -15,19 +15,25 @@ public:
   typedef Simone::Ptr<const FrequencyTable> PtrConst;
   typedef Simone::Ptr<FrequencyTable> Ptr;
 
-  static Ptr FrequencyTableNew(uint32_t var_vals, uint32_t output_vals) {
-    return new FrequencyTable(var_vals, output_vals);
+  static Ptr FrequencyTableNew(uint32_t domain_size, uint32_t range_size) {
+    return new FrequencyTable(domain_size, range_size);
   }
 
-  uint32_t frequency(uint32_t var_val, uint32_t out_val) const;
-  void frequencyIs(uint32_t var_val, uint32_t out_val, uint32_t freq);
-  void frequencyInc(uint32_t var_val, uint32_t out_val);
-  void frequencyDec(uint32_t var_val, uint32_t out_val);
+  uint32_t frequency(uint32_t in_val, uint32_t out_val) const;
+  void frequencyIs(uint32_t in_val, uint32_t out_val, uint32_t freq);
+  void frequencyInc(uint32_t in_val, uint32_t out_val);
+  void frequencyDec(uint32_t in_val, uint32_t out_val);
+
+  uint32_t domainSize() const { return domain_size_; }
+  uint32_t rangeSize() const { return range_size_; }
 private:
-  FrequencyTable(uint32_t var_vals, uint32_t output_vals);
+  FrequencyTable(uint32_t domain_size, uint32_t range_size);
 
   /* data members */
   multi_array<Frequency::Ptr,2> freq_table_;
+
+  uint32_t domain_size_;
+  uint32_t range_size_;
 
   /* operations disallowed */
   FrequencyTable(const FrequencyTable&);

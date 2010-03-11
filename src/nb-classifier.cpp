@@ -10,17 +10,17 @@ NBClassifier::NBClassifier(DatasetDescription::PtrConst training_data) :
   Classifier(training_data)
 {
   FrequencyTable::Ptr freq_table;
-  Observation var_value, output_value;
+  Observation in_value, output_value;
   for (uint32_t var = 0; var < training_data_->varCount(); ++var) {
     /* creating frequency table for singlge variable */
-    freq_table = FrequencyTable::FrequencyTableNew(kNumVarValues,
-                                                   kNumOutputValues);
+    freq_table = FrequencyTable::FrequencyTableNew(kDomainSize,
+                                                   kRangeSize);
     /* populating frequency table by tracking
        occurences througout every data vector */
     for (uint32_t vec = 0; vec < training_data_->vectorCount(); ++vec) {
-      var_value = training_data_->inputObservation(vec, var);
+      in_value = training_data_->inputObservation(vec, var);
       output_value = training_data_->outputObservation(vec);
-      freq_table->frequencyInc(var_value.value(), output_value.value());
+      freq_table->frequencyInc(in_value.value(), output_value.value());
     }
 
     /* converting frequency table into a joint probability distribution table */

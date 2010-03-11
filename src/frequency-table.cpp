@@ -4,34 +4,36 @@
 
 namespace Radon {
 
-FrequencyTable::FrequencyTable(uint32_t var_vals, uint32_t output_vals) :
-  freq_table_(boost::extents[var_vals][output_vals])
+FrequencyTable::FrequencyTable(uint32_t _domain_size, uint32_t _range_size) :
+  freq_table_(boost::extents[_domain_size][_range_size]),
+  domain_size_(_domain_size),
+  range_size_(_range_size)
 {
-  for (uint32_t var_val = 0; var_val < var_vals; ++var_val) {
-    for (uint32_t out_val = 0; out_val < output_vals; ++out_val) {
-      freq_table_[var_val][out_val] = Frequency::FrequencyNew();
+  for (uint32_t in_val = 0; in_val < domain_size_; ++in_val) {
+    for (uint32_t out_val = 0; out_val < range_size_; ++out_val) {
+      freq_table_[in_val][out_val] = Frequency::FrequencyNew();
     }
   }
 }
 
 uint32_t
-FrequencyTable::frequency(uint32_t var_val, uint32_t out_val) const {
-  return freq_table_[var_val][out_val]->frequency();
+FrequencyTable::frequency(uint32_t in_val, uint32_t out_val) const {
+  return freq_table_[in_val][out_val]->frequency();
 }
 
 void
-FrequencyTable::frequencyIs(uint32_t var_val, uint32_t out_val, uint32_t freq) {
-  freq_table_[var_val][out_val]->frequencyIs(freq);
+FrequencyTable::frequencyIs(uint32_t in_val, uint32_t out_val, uint32_t freq) {
+  freq_table_[in_val][out_val]->frequencyIs(freq);
 }
 
 void
-FrequencyTable::frequencyInc(uint32_t var_val, uint32_t out_val) {
-  freq_table_[var_val][out_val]->frequencyInc();
+FrequencyTable::frequencyInc(uint32_t in_val, uint32_t out_val) {
+  freq_table_[in_val][out_val]->frequencyInc();
 }
 
 void
-FrequencyTable::frequencyDec(uint32_t var_val, uint32_t out_val) {
-  freq_table_[var_val][out_val]->frequencyDec();
+FrequencyTable::frequencyDec(uint32_t in_val, uint32_t out_val) {
+  freq_table_[in_val][out_val]->frequencyDec();
 }
 
 } /* end of namespace Radon */
