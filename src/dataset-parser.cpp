@@ -5,7 +5,7 @@ using std::ifstream;
 
 #include <simone/utility.h>
 
-#include "variable.h"
+#include "observation.h"
 
 namespace Radon {
 

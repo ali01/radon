@@ -13,7 +13,7 @@ using boost::multi_array;
 using Simone::Vector;
 
 #include "frequency.h"
-#include "variable.h"
+#include "observation.h"
 
 namespace Radon {
 
@@ -34,8 +34,8 @@ private:
   DatasetDescription(uint32_t data_vectors, uint32_t vars);
 
   /* data members */
-  multi_array<Variable,2> data_;
-  Vector<Variable> output_;
+  multi_array<Observation,2> data_;
+  Vector<Observation> output_;
 
   uint32_t data_vectors_;
   uint32_t vars_;
