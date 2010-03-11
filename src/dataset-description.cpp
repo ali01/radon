@@ -1,6 +1,6 @@
 #include "dataset-description.h"
 
-#include "observation.h"
+#include "frequency.h"
 
 namespace Radon {
 

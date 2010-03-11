@@ -12,7 +12,7 @@ using boost::multi_array;
 #include <simone/vector.h>
 using Simone::Vector;
 
-#include "observation.h"
+#include "frequency.h"
 #include "variable.h"
 
 namespace Radon {

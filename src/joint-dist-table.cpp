@@ -1,7 +1,7 @@
 #include "joint-dist-table.h"
 
 #include "globals.h"
-#include "observation.h"
+#include "frequency.h"
 
 namespace Radon {
 
@@ -10,7 +10,7 @@ JointDistTable::JointDistTable() //:
 {
   for (uint32_t var = 0; var < kNumVarValues; ++var) {
     for (uint32_t out = 0; out < kNumOutputValues; ++out) {
-      // prob_table_[var][out] = Observation::ObservationNew();
+      // prob_table_[var][out] = Frequency::FrequencyNew();
     }
   }
 }

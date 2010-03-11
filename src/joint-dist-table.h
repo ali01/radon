@@ -19,7 +19,7 @@ private:
   JointDistTable();
 
   /* data members */
-  // multi_array<Observation::Ptr,2> prob_table_;
+  // multi_array<Frequency::Ptr,2> prob_table_;
 
   /* disallowed operations */
   JointDistTable(const JointDistTable&);

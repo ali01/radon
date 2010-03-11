@@ -6,7 +6,7 @@ using boost::multi_array;
 
 #include <simone/ptr_interface.h>
 
-#include "observation.h"
+#include "frequency.h"
 
 namespace Radon {
 
@@ -25,7 +25,7 @@ private:
   FrequencyTable() {}
 
   /* data members */
-  multi_array<Observation::Ptr,2> freq_table_;
+  multi_array<Frequency::Ptr,2> freq_table_;
 
   /* operations disallowed */
   FrequencyTable(const FrequencyTable&);
