@@ -20,11 +20,17 @@ public:
     return new JointDistTable(_freq_table);
   }
 
+  Probability inputMarginal(uint32_t in_idx);
+  Probability outputMarginal(uint32_t out_idx);
+
 private:
   JointDistTable(FrequencyTable::Ptr _freq_table);
 
   /* data members */
   multi_array<Probability,2> prob_table_;
+
+  uint32_t domain_size_;
+  uint32_t range_size_;
 
   /* disallowed operations */
   JointDistTable(const JointDistTable&);

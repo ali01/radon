@@ -9,9 +9,8 @@ namespace Radon {
 
 class Probability : public Simone::Numeric<Probability,double> {
 public:
-  Probability() : Simone::Numeric<Probability,double>(1.0) {}
-  Probability(double v) : Simone::Numeric<Probability,double>(v) {}
-  // Probability(Frequency )
+  Probability(double v=1.0) : Simone::Numeric<Probability,double>(v) {}
+  Probability(Frequency num, Frequency den);
 };
 
 } /* end of namespace radon */

@@ -50,7 +50,7 @@ NBClassifier::predictionSet(EstMode _mode) {
 
 PredictionSet::PtrConst
 NBClassifier::compute_prediction_set(EstMode _mode) {
-
+  return NULL;
 }
 
 } /* end of namespace Radon */
