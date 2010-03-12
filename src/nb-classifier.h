@@ -38,6 +38,7 @@ private:
   /* private member functions */
   PredictionSet::PtrConst compute_prediction_set(EstMode _mode);
 
+
   /* data members */
   /* vector of each variable's joint probability distribution */
   Vector<JointDistTable::Ptr> joint_dist_;
