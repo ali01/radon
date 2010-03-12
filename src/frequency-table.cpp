@@ -12,25 +12,25 @@ FrequencyTable::FrequencyTable(uint32_t _domain_size, uint32_t _range_size) :
 {
   for (uint32_t in_val = 0; in_val < domain_size_; ++in_val) {
     for (uint32_t out_val = 0; out_val < range_size_; ++out_val) {
-      freq_table_[in_val][out_val] = Frequency::FrequencyNew();
+      freq_table_[in_val][out_val] = Frequency();
     }
   }
 }
 
 uint32_t
 FrequencyTable::frequency(uint32_t in_val, uint32_t out_val) const {
-  return freq_table_[in_val][out_val]->frequency();
+  return freq_table_[in_val][out_val].frequency();
 }
 
 void
 FrequencyTable::frequencyInc(uint32_t in_val, uint32_t out_val) {
-  freq_table_[in_val][out_val]->frequencyInc();
+  freq_table_[in_val][out_val].frequencyInc();
   ++count_;
 }
 
 void
 FrequencyTable::frequencyDec(uint32_t in_val, uint32_t out_val) {
-  freq_table_[in_val][out_val]->frequencyDec();
+  freq_table_[in_val][out_val].frequencyDec();
   --count_;
 }
 

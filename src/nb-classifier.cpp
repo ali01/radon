@@ -10,25 +10,28 @@ NBClassifier::NBClassifier(DatasetDescription::PtrConst training_data) :
   Classifier(training_data)
 {
   FrequencyTable::Ptr freq_table;
-  JointDistTable::Ptr dist_table;
-  Observation in_value, output_value;
+  JointDistTable::Ptr joint_dist_table;
+  Observation in_value, out_value;
   for (uint32_t var = 0; var < training_data_->varCount(); ++var) {
     /* creating frequency table for singlge variable */
-    freq_table = FrequencyTable::FrequencyTableNew(kDomainSize,
-                                                   kRangeSize);
+    freq_table = FrequencyTable::FrequencyTableNew(kDomainSize, kRangeSize);
+
     /* populating frequency table by tracking
        occurences througout every data vector */
     for (uint32_t vec = 0; vec < training_data_->vectorCount(); ++vec) {
       in_value = training_data_->inputObservation(vec, var);
-      output_value = training_data_->outputObservation(vec);
-      freq_table->frequencyInc(in_value.value(), output_value.value());
+      out_value = training_data_->outputObservation(vec);
+
+      /* incrementing frequency at coorditates
+         (in_value, out_value) of frequency table */
+      freq_table->frequencyInc(in_value.value(), out_value.value());
     }
 
     /* converting frequency table into a joint probability distribution table */
-    dist_table = JointDistTable::JointDistTableNew(freq_table);
+    joint_dist_table = JointDistTable::JointDistTableNew(freq_table);
 
-    /* add distribution table to model */
-    dist_map_.pushBack(dist_table);
+    /* adding distribution table to model */
+    joint_dist_.pushBack(joint_dist_table);
   }
 }
 
@@ -44,7 +47,6 @@ NBClassifier::predictionSet(EstMode _mode) {
 
   return compute_prediction_set(_mode);
 }
-
 
 PredictionSet::PtrConst
 NBClassifier::compute_prediction_set(EstMode _mode) {

@@ -1,30 +1,21 @@
 #ifndef DATA_POINT_H_CERUAXL8
 #define DATA_POINT_H_CERUAXL8
 
-#include <simone/ptr_interface.h>
+#include <simone/numeric.h>
 
 namespace Radon {
 
-class Frequency : public Simone::PtrInterface<Frequency> {
+class Frequency : public Simone::Numeric<Frequency,uint32_t> {
 public:
-  typedef Simone::Ptr<const Frequency> PtrConst;
-  typedef Simone::Ptr<Frequency> Ptr;
-
-  static Ptr FrequencyNew() { return new Frequency(); }
-
+  Frequency(uint32_t v=0) : frequency_(v) {}
   uint32_t frequency() const { return frequency_; }
   void frequencyIs(uint32_t _freq) { frequency_ = _freq; }
   void frequencyInc() { ++frequency_; }
   void frequencyDec() { --frequency_; }
-private:
-  Frequency() : frequency_(0) {}
 
+private:
   /* data members */
   uint32_t frequency_;
-
-  /* disallowed operations */
-  Frequency(const Frequency&);
-  Frequency& operator=(const Frequency&);
 };
 
 } /* end of namespace Radon */

@@ -31,7 +31,7 @@ private:
   FrequencyTable(uint32_t domain_size, uint32_t range_size);
 
   /* data members */
-  multi_array<Frequency::Ptr,2> freq_table_;
+  multi_array<Frequency,2> freq_table_;
 
   uint32_t domain_size_;
   uint32_t range_size_;

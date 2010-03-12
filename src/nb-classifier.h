@@ -9,6 +9,7 @@
 #include "classifier.h"
 #include "dataset-description.h"
 #include "joint-dist-table.h"
+#include "probability.h"
 
 namespace Radon {
 
@@ -38,7 +39,11 @@ private:
   PredictionSet::PtrConst compute_prediction_set(EstMode _mode);
 
   /* data members */
-  Vector<JointDistTable::Ptr> dist_map_;
+  /* vector of each variable's joint probability distribution */
+  Vector<JointDistTable::Ptr> joint_dist_;
+
+  /* vector of each outcome's marginal probability */
+  Vector<Probability> out_marginal_;
 
   /* disallowed operations */
   NBClassifier(const NBClassifier&);
