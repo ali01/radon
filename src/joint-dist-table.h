@@ -20,6 +20,9 @@ public:
     return new JointDistTable(_freq_table);
   }
 
+  Probability inputConditional(uint32_t in_idx, uint32_t out_idx);
+  Probability outputConditional(uint32_t out_idx, uint32_t in_idx);
+
   Probability inputMarginal(uint32_t in_idx);
   Probability outputMarginal(uint32_t out_idx);
 
