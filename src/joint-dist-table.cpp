@@ -26,21 +26,23 @@ JointDistTable::JointDistTable(FrequencyTable::Ptr _freq_table) :
 }
 
 Probability
-JointDistTable::inputConditional(uint32_t in_idx, uint32_t out_idx) {
+JointDistTable::inputConditional(uint32_t in_idx, uint32_t out_idx) const {
   /* input conditional probability is equal to P(X,Y) / P(Y) */
   Probability in_conditional = prob_table_[in_idx][out_idx];
-  return in_conditional / output_marginal(out_idx);
+  in_conditional /= outputMarginal(out_idx);
+  return in_conditional;
 }
 
 Probability
-JointDistTable::outputConditional(uint32_t out_idx, uint32_t in_idx) {
+JointDistTable::outputConditional(uint32_t out_idx, uint32_t in_idx) const {
   /* output conditional probability is equal to P(X,Y) / P(X) */
-  Probability out_conditional = prob_table[in_idx][out_idx];
-  return out_conditional / inputMarginal(in_idx);
+  Probability out_conditional = prob_table_[in_idx][out_idx];
+  out_conditional /= inputMarginal(in_idx);
+  return out_conditional;
 }
 
 Probability
-JointDistTable::inputMarginal(uint32_t in_idx) {
+JointDistTable::inputMarginal(uint32_t in_idx) const {
   Probability in_marginal(0.0);
   for (uint32_t out_idx = 0; out_idx < range_size_; ++out_idx)
     in_marginal += prob_table_[in_idx][out_idx];
@@ -48,7 +50,7 @@ JointDistTable::inputMarginal(uint32_t in_idx) {
 }
 
 Probability
-JointDistTable::outputMarginal(uint32_t out_idx) {
+JointDistTable::outputMarginal(uint32_t out_idx) const {
   Probability out_marginal(0.0);
   for (uint32_t in_idx = 0; in_idx < domain_size_; ++in_idx)
     out_marginal += prob_table_[in_idx][out_idx];

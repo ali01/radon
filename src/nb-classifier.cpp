@@ -6,15 +6,18 @@
 
 namespace Radon {
 
+/* constructor trains learning algorithm with TRAINING_DATA */
 NBClassifier::NBClassifier(DatasetDescription::PtrConst training_data) :
-  Classifier(training_data)
+  Classifier(training_data), domain_size_(kDomainSize), range_size_(kRangeSize)
 {
   FrequencyTable::Ptr freq_table;
   JointDistTable::Ptr joint_dist_table;
   Observation in_value, out_value;
+
+  /* generating joint probability distribution tables for each variable */
   for (uint32_t var = 0; var < training_data_->varCount(); ++var) {
     /* creating frequency table for singlge variable */
-    freq_table = FrequencyTable::FrequencyTableNew(kDomainSize, kRangeSize);
+    freq_table = FrequencyTable::FrequencyTableNew(domain_size_, range_size_);
 
     /* populating frequency table by tracking
        occurences througout every data vector */
@@ -33,6 +36,10 @@ NBClassifier::NBClassifier(DatasetDescription::PtrConst training_data) :
     /* adding distribution table to model */
     joint_dist_.pushBack(joint_dist_table);
   }
+
+  /* populating vector of output marginal probabilities, P(Y) */
+  for (uint32_t out_idx = 0; out_idx < range_size_; ++out_idx)
+    out_marginal_.pushBack(joint_dist_[0]->outputMarginal(out_idx));
 }
 
 PredictionSet::PtrConst

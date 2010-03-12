@@ -45,6 +45,9 @@ private:
   /* vector of each outcome's marginal probability */
   Vector<Probability> out_marginal_;
 
+  uint32_t domain_size_;
+  uint32_t range_size_;
+
   /* disallowed operations */
   NBClassifier(const NBClassifier&);
   NBClassifier& operator=(const NBClassifier&);
