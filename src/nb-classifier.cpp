@@ -37,11 +37,14 @@ NBClassifier::NBClassifier(DatasetDescription::PtrConst training_data) :
 
 PredictionSet::PtrConst
 NBClassifier::predictionSet(EstMode _mode) {
+  /* if a prediction set for test_data_ has
+     already been computed and is cached, return it */
   if (prediction_set_ != NULL)
     return prediction_set_;
 
   prediction_set_ = NBPredictionSet::NBPredictionSetNew(_mode);
 
+  /* if test_data_ is NULL, return an empty prediction */
   if (test_data_ == NULL)
     return prediction_set_;
 
