@@ -11,7 +11,7 @@ namespace Radon {
 
 class ProbabilityLn : public Simone::Numeric<ProbabilityLn,double> {
 public:
-  ProbabilityLn(Probability p=Probability(1.0));
+  ProbabilityLn(Probability p);
 };
 
 } /* end of namespace Radon */

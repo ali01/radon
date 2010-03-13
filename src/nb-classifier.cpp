@@ -98,10 +98,28 @@ NBClassifier::input_cond_ln_product(DatasetDescription::PtrConst _dataset,
   return p_ln;
 }
 
-uint32_t
+/* for a given DATA_VECTOR in DATASET, returns the value of OUT_CONDITION
+   that yields the maximum return value possible when passed into
+   input_cond_ln_product() */
+Observation
 NBClassifier::output_arg_max(DatasetDescription::PtrConst _dataset,
-                             uint32_t data_vector) const {
-  return 0;
+                             uint32_t _data_vector) const {
+  Observation arg_max;
+
+  /* initialized with a probability of 0.0 -- ln(0.0) = DOUBLE_MIN */
+  ProbabilityLn p_max(0.0), curr(0.0);
+
+  /* iterate over possible return values of input_cond_ln_product and
+     keep track of maximum */
+  for (uint32_t out_cond; out_cond < range_size_; ++out_cond) {
+    curr = input_cond_ln_product(_dataset, _data_vector, out_cond);
+    if (curr > p_max){
+      p_max = curr;
+      arg_max = out_cond;
+    }
+  }
+
+  return arg_max;
 }
 
 } /* end of namespace Radon */
