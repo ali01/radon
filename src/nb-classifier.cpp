@@ -17,8 +17,12 @@ NBClassifier::NBClassifier(DatasetDescription::PtrConst training_data,
 
   /* generating joint probability distribution tables for each variable */
   for (uint32_t var = 0; var < training_data_->varCount(); ++var) {
-    /* creating frequency table for singlge variable */
-    freq_table = FrequencyTable::FrequencyTableNew(domain_size_, range_size_);
+    /* creating frequency table for single variable;
+       if MODE is equal to laplace, initialize frequency table values to 1
+       rather than to 0 */
+    Frequency init_value = (_mode == kLaplace) ? Frequency(1) : Frequency(0);
+    freq_table = FrequencyTable::FrequencyTableNew(domain_size_, range_size_,
+                                                   init_value);
 
     /* populating frequency table by tracking
        occurences througout every data vector */
