@@ -8,10 +8,12 @@
 namespace Radon {
 
 ProbabilityLn::ProbabilityLn(Probability p) {
-  if (Simone::math::equal(p.value(), 0.0))
-    valueIs(numeric_limits<double>::min());
-  else
+  if (Simone::math::equal(p.value(), 0.0)){
+    /* numeric_limits<double>::min() is equal to zero; use negative max */
+    valueIs(-1 * numeric_limits<double>::max());
+  } else {
     valueIs(log(p.value()));
+  }
 }
 
 bool
