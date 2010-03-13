@@ -2,8 +2,8 @@
 
 namespace Radon {
 
-Classifier::Classifier(DatasetDescription::PtrConst training_data) :
-  training_data_(training_data_) {}
+Classifier::Classifier(DatasetDescription::PtrConst _training_data) :
+  training_data_(_training_data) {}
 
 void
 Classifier::testDatasetIs(DatasetDescription::PtrConst _data) {

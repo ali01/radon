@@ -26,7 +26,8 @@ int main() {
   DatasetParser::PtrConst data_parser;
   NBClassifier::Ptr nb_mle_classifier;
   LRClassifier::Ptr lr_classifier;
-  OutputPredictionSet::PtrConst nb_mle_prediction, nb_laplace_prediction;
+  OutputPredictionSet::PtrConst nb_mle_prediction_set;
+  OutputPredictionSet::PtrConst nb_laplace_prediction_set;
   OutputPredictionSet::PtrConst lr_prediction;
 
   filepath_prefix =  Radon::kDatasetPath;
@@ -47,7 +48,7 @@ int main() {
   nb_mle_classifier = NBClassifier::NBClassifierNew(train_dataset);
   nb_mle_classifier->testDatasetIs(test_dataset);
 
-  nb_mle_prediction = nb_mle_classifier->predictionSet();
+  nb_mle_prediction_set = nb_mle_classifier->predictionSet();
 
-  cout << nb_mle_classifier << endl;
+  cout << *nb_mle_prediction_set << endl;
 }

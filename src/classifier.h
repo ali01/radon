@@ -18,7 +18,7 @@ public:
   virtual OutputPredictionSet::PtrConst predictionSet() = 0;
 
 protected:
-  Classifier(DatasetDescription::PtrConst _data);
+  Classifier(DatasetDescription::PtrConst _training_data);
   virtual ~Classifier() {}
 
   /* data members */
