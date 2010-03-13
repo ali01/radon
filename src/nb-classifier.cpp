@@ -43,44 +43,61 @@ NBClassifier::NBClassifier(DatasetDescription::PtrConst training_data) :
 }
 
 PredictionSet::PtrConst
-NBClassifier::predictionSet(EstMode _mode) {
+NBClassifier::predictionSet() {
   /* if a prediction set for test_data_ has
      already been computed and is cached, return it */
   if (prediction_set_ != NULL)
     return prediction_set_;
 
-  prediction_set_ = NBPredictionSet::NBPredictionSetNew(_mode);
+  prediction_set_ = NBPredictionSet::NBPredictionSetNew();
 
   /* if test_data_ is NULL, return an empty prediction */
   if (test_data_ == NULL)
     return prediction_set_;
 
-  return prediction_set(_mode);
+  return prediction_set();
 }
 
 PredictionSet::PtrConst
-NBClassifier::prediction_set(EstMode _mode) {
+NBClassifier::prediction_set() const {
   return NULL;
 }
 
+/* returns the product, in log space, over all P(X_i=x, Y)
+   where x = IN_VAL and Y = out_condition */
 ProbabilityLn
-NBClassifier::input_cond_ln_product(uint32_t in_val, uint32_t out_condition) {
+NBClassifier::input_cond_ln_product(DatasetDescription::PtrConst _dataset,
+                                    uint32_t _data_vector,
+                                    Observation _out_condition) const {
   JointDistTable::Ptr joint_dist;
+  Observation in_val;
   Probability p;
-  ProbabilityLn p_ln;
 
+  /* initialized with a probability of 1.0 -- ln(1.0) = 0 */
+  ProbabilityLn p_ln(1.0);
+
+  /* iterate over the joint probability distribution of each variable, compute the
+     variable's conditional probability P(X_i | Y), and add it's log into p_ln. */
   for (uint32_t dist_idx = 0; dist_idx < joint_dist_.size(); ++dist_idx) {
     /* joint probability distribution for variable X_i */
     joint_dist = joint_dist_[dist_idx];
 
+    /* input value X_i at the specified DATA_VECTOR in DATASET */
+    in_val = _dataset->inputObservation(_data_vector, dist_idx);
+
     /* Probability p = P(X_i | Y) */
-    Probability p = joint_dist->inputConditional(in_val, out_condition);
+    p = joint_dist->inputConditional(in_val, _out_condition);
 
     /* ProbabilityLn p_ln = ln(p) */
     p_ln += ProbabilityLn(p);
   }
 
   return p_ln;
+}
+
+uint32_t
+NBClassifier::output_arg_max() const {
+  return 0;
 }
 
 } /* end of namespace Radon */

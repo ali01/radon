@@ -7,6 +7,7 @@ using boost::multi_array;
 #include <simone/ptr_interface.h>
 
 #include "frequency-table.h"
+#include "observation.h"
 #include "probability.h"
 
 namespace Radon {
@@ -20,11 +21,11 @@ public:
     return new JointDistTable(_freq_table);
   }
 
-  Probability inputConditional(uint32_t in_idx, uint32_t out_condition) const;
-  Probability outputConditional(uint32_t out_idx, uint32_t in_condition) const;
+  Probability inputConditional(Observation in_idx, Observation out_condition) const;
+  Probability outputConditional(Observation out_idx, Observation in_condition) const;
 
-  Probability inputMarginal(uint32_t in_idx) const;
-  Probability outputMarginal(uint32_t out_idx) const;
+  Probability inputMarginal(Observation in_idx) const;
+  Probability outputMarginal(Observation out_idx) const;
 
 private:
   JointDistTable(FrequencyTable::Ptr _freq_table);
@@ -32,8 +33,8 @@ private:
   /* data members */
   multi_array<Probability,2> prob_table_;
 
-  uint32_t domain_size_;
-  uint32_t range_size_;
+  size_t domain_size_;
+  size_t range_size_;
 
   /* disallowed operations */
   JointDistTable(const JointDistTable&);

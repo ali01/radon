@@ -2,7 +2,6 @@
 #define NB_PREDICTION_H_ILM1M24Q
 
 #include "prediction-set.h"
-#include "nb-classifier.h"
 
 namespace Radon {
 
@@ -11,12 +10,10 @@ public:
   typedef Simone::Ptr<const NBPredictionSet> PtrConst;
   typedef Simone::Ptr<NBPredictionSet> Ptr;
 
-  static Ptr NBPredictionSetNew(NBClassifier::EstMode _mode) {
-    return new NBPredictionSet(_mode);
-  }
+  static Ptr NBPredictionSetNew() { return new NBPredictionSet(); }
 
 private:
-  NBPredictionSet(NBClassifier::EstMode _mode) {}
+  NBPredictionSet() {}
 
   /* disallowed operations */
   NBPredictionSet(const NBPredictionSet&);

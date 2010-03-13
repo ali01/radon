@@ -7,15 +7,7 @@ namespace Radon {
 
 class Frequency : public Simone::Numeric<Frequency,uint32_t> {
 public:
-  Frequency(uint32_t v=0) : frequency_(v) {}
-  uint32_t frequency() const { return frequency_; }
-  void frequencyIs(uint32_t _freq) { frequency_ = _freq; }
-  void frequencyInc() { ++frequency_; }
-  void frequencyDec() { --frequency_; }
-
-private:
-  /* data members */
-  uint32_t frequency_;
+  Frequency(uint32_t v=0) : Simone::Numeric<Frequency,uint32_t>(v) {}
 };
 
 } /* end of namespace Radon */

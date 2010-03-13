@@ -11,12 +11,12 @@ JointDistTable::JointDistTable(FrequencyTable::Ptr _freq_table) :
   domain_size_(_freq_table->domainSize()),
   range_size_(_freq_table->rangeSize())
 {
-  uint32_t freq;
+  Frequency freq;
   double freq_double;
-  for (uint32_t in_val = 0; in_val < _freq_table->domainSize(); ++in_val) {
-    for (uint32_t out_val = 0; out_val < _freq_table->rangeSize(); ++out_val) {
+  for (size_t in_val = 0; in_val < _freq_table->domainSize(); ++in_val) {
+    for (size_t out_val = 0; out_val < _freq_table->rangeSize(); ++out_val) {
       freq = _freq_table->frequency(in_val, out_val);
-      freq_double = static_cast<double>(freq);
+      freq_double = static_cast<double>(freq.value());
 
       /* probability for a single input -> output
          mapping is given by frequency/total_count */
@@ -26,34 +26,36 @@ JointDistTable::JointDistTable(FrequencyTable::Ptr _freq_table) :
 }
 
 Probability
-JointDistTable::inputConditional(uint32_t in_idx, uint32_t out_condition) const {
+JointDistTable::inputConditional(Observation in_idx,
+                                 Observation out_condition) const {
   /* input conditional probability is equal to P(X,Y) / P(Y) */
-  Probability in_conditional = prob_table_[in_idx][out_condition];
+  Probability in_conditional = prob_table_[in_idx.value()][out_condition.value()];
   in_conditional /= outputMarginal(out_condition);
   return in_conditional;
 }
 
 Probability
-JointDistTable::outputConditional(uint32_t out_idx, uint32_t in_condition) const {
+JointDistTable::outputConditional(Observation out_idx,
+                                  Observation in_condition) const {
   /* output conditional probability is equal to P(X,Y) / P(X) */
-  Probability out_conditional = prob_table_[in_condition][out_idx];
+  Probability out_conditional = prob_table_[in_condition.value()][out_idx.value()];
   out_conditional /= inputMarginal(in_condition);
   return out_conditional;
 }
 
 Probability
-JointDistTable::inputMarginal(uint32_t in_idx) const {
+JointDistTable::inputMarginal(Observation in_idx) const {
   Probability in_marginal(0.0);
-  for (uint32_t out_idx = 0; out_idx < range_size_; ++out_idx)
-    in_marginal += prob_table_[in_idx][out_idx];
+  for (size_t out_idx = 0; out_idx < range_size_; ++out_idx)
+    in_marginal += prob_table_[in_idx.value()][out_idx];
   return in_marginal;
 }
 
 Probability
-JointDistTable::outputMarginal(uint32_t out_idx) const {
+JointDistTable::outputMarginal(Observation out_idx) const {
   Probability out_marginal(0.0);
-  for (uint32_t in_idx = 0; in_idx < domain_size_; ++in_idx)
-    out_marginal += prob_table_[in_idx][out_idx];
+  for (size_t in_idx = 0; in_idx < domain_size_; ++in_idx)
+    out_marginal += prob_table_[in_idx][out_idx.value()];
   return out_marginal;
 }
 

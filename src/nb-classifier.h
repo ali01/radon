@@ -28,17 +28,23 @@ public:
     return new NBClassifier(training_data);
   }
 
-  PredictionSet::PtrConst predictionSet(EstMode _mode);
+  PredictionSet::PtrConst predictionSet();
 
 private:
   NBClassifier(DatasetDescription::PtrConst training_data);
 
-  /* override base class virtual function */
-  PredictionSet::PtrConst predictionSet() { return predictionSet(kLaplace); }
-
   /* private member functions */
-  PredictionSet::PtrConst prediction_set(EstMode _mode);
-  ProbabilityLn input_cond_ln_product(uint32_t in_val, uint32_t out_condition);
+  PredictionSet::PtrConst prediction_set() const;
+
+  /* returns the product, in log space, over all P(X_i=x, Y)
+     where Y = OUT_CONDITION */
+  ProbabilityLn input_cond_ln_product(DatasetDescription::PtrConst _dataset,
+                                      uint32_t _data_vector,
+                                      Observation _out_condition) const;
+
+  /* for a given returns the value of OUT_CONDITION that yields the maximum
+     return value possible when passed into input_cond_ln_product() */
+  uint32_t output_arg_max() const;
 
   /* data members */
   /* vector of each variable's joint probability distribution */

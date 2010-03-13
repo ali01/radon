@@ -7,6 +7,7 @@ using boost::multi_array;
 #include <simone/ptr_interface.h>
 
 #include "frequency.h"
+#include "observation.h"
 
 namespace Radon {
 
@@ -15,27 +16,28 @@ public:
   typedef Simone::Ptr<const FrequencyTable> PtrConst;
   typedef Simone::Ptr<FrequencyTable> Ptr;
 
-  static Ptr FrequencyTableNew(uint32_t domain_size, uint32_t range_size) {
+  static Ptr FrequencyTableNew(size_t domain_size, size_t range_size) {
     return new FrequencyTable(domain_size, range_size);
   }
 
-  void frequencyInc(uint32_t in_val, uint32_t out_val);
-  void frequencyDec(uint32_t in_val, uint32_t out_val);
+  /* increment or decrement observation specified by IN_VAL and OUT_VAL */
+  void frequencyInc(Observation in_val, Observation out_val);
+  void frequencyDec(Observation in_val, Observation out_val);
 
-  uint32_t frequency(uint32_t in_val, uint32_t out_val) const;
-  uint32_t domainSize() const { return domain_size_; }
-  uint32_t rangeSize() const { return range_size_; }
-  uint32_t count() const { return count_; }
+  Frequency frequency(Observation in_val, Observation out_val) const;
+  size_t domainSize() const { return domain_size_; }
+  size_t rangeSize() const { return range_size_; }
+  size_t count() const { return count_; }
 
 private:
-  FrequencyTable(uint32_t domain_size, uint32_t range_size);
+  FrequencyTable(size_t domain_size, size_t range_size);
 
   /* data members */
   multi_array<Frequency,2> freq_table_;
 
-  uint32_t domain_size_;
-  uint32_t range_size_;
-  uint32_t count_;
+  size_t domain_size_;
+  size_t range_size_;
+  size_t count_;
 
   /* operations disallowed */
   FrequencyTable(const FrequencyTable&);
