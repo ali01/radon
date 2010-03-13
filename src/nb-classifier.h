@@ -29,6 +29,7 @@ public:
     return new NBClassifier(training_data);
   }
 
+  /* generates a set of predictions for TEST_DATA (see base class Classifier) */
   OutputPredictionSet::PtrConst predictionSet();
 
 private:

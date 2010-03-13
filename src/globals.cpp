@@ -3,7 +3,7 @@
 namespace Radon {
 
 /* dataset (e.g. "simple", "heart", "vote") */
-const char *kDataset = "simple";
+const char *kDataset = "vote";
 
 const char *kDatasetPath = "../datasets";
 

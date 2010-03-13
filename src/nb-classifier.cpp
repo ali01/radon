@@ -42,6 +42,7 @@ NBClassifier::NBClassifier(DatasetDescription::PtrConst training_data) :
     out_marginal_.pushBack(joint_dist_[0]->outputMarginal(out_idx));
 }
 
+/* generates a set of predictions for TEST_DATA (see base class Classifier) */
 OutputPredictionSet::PtrConst
 NBClassifier::predictionSet() {
   /* if a prediction set for test_data_ has
