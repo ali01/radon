@@ -64,11 +64,23 @@ NBClassifier::prediction_set(EstMode _mode) {
 }
 
 ProbabilityLn
-NBClassifier::input_conditional_ln_product(uint32_t var_idx, uint32_t in_val,
-                                           uint32_t out_condition) {
-  JointDistTable::Ptr joint_dist = joint_dist_[var_idx];
-  Probability p = joint_dist->inputConditional(in_val, out_condition);
-  return ProbabilityLn(p);
+NBClassifier::input_cond_ln_product(uint32_t in_val, uint32_t out_condition) {
+  JointDistTable::Ptr joint_dist;
+  Probability p;
+  ProbabilityLn p_ln;
+
+  for (uint32_t dist_idx = 0; dist_idx < joint_dist_.size(); ++dist_idx) {
+    /* joint probability distribution for variable X_i */
+    joint_dist = joint_dist_[dist_idx];
+
+    /* Probability p = P(X_i | Y) */
+    Probability p = joint_dist->inputConditional(in_val, out_condition);
+
+    /* ProbabilityLn p_ln = ln(p) */
+    p_ln += ProbabilityLn(p);
+  }
+
+  return p_ln;
 }
 
 } /* end of namespace Radon */
