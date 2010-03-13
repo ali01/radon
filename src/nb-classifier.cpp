@@ -91,7 +91,6 @@ NBClassifier::joint_prob_arg_max(DatasetDescription::PtrConst _dataset,
      keep track of maximum */
   for (uint32_t out_cond = 0; out_cond < range_size_; ++out_cond) {
     curr = joint_prob_ln(_dataset, _input_vector, out_cond);
-    printf("curr = %f\n", curr.value());
     if (curr > p_max){
       arg_max = out_cond;
       p_max = curr;
@@ -131,15 +130,12 @@ NBClassifier::joint_prob_ln(DatasetDescription::PtrConst _dataset,
 
     /* increment P_LN by ln(P) */
     p_ln += ProbabilityLn(p);
-
-    printf("p = %f\n", p.value());
-    printf("p_ln = %f\n", p_ln.value());
   }
 
   /* P_LN is currently equal to the sum of the natural logs of P(X_i | Y)
-     for all i. Multiply P_LN by the log of the marginal probability of Y. */
+     for all i. Increment P_LN by the log of the marginal probability of Y. */
   p = joint_dist->outputMarginal(_output_value);
-  p_ln *= ProbabilityLn(p);
+  p_ln += ProbabilityLn(p);
 
   return p_ln;
 }
