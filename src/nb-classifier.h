@@ -25,15 +25,16 @@ public:
 
   enum EstMode { kML, kLaplace };
 
-  static Ptr NBClassifierNew(DatasetDescription::PtrConst training_data) {
-    return new NBClassifier(training_data);
+  static Ptr NBClassifierNew(DatasetDescription::PtrConst training_data,
+                             EstMode _mode) {
+    return new NBClassifier(training_data, _mode);
   }
 
   /* generates a set of predictions for TEST_DATA (see base class Classifier) */
   OutputPredictionSet::PtrConst predictionSet();
 
 private:
-  NBClassifier(DatasetDescription::PtrConst training_data);
+  NBClassifier(DatasetDescription::PtrConst training_data, EstMode _mode);
 
   /* private member functions */
 

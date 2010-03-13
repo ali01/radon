@@ -24,7 +24,7 @@ int main() {
   string filepath_prefix, filepath_suffix;
   DatasetDescription::PtrConst train_dataset, test_dataset;
   DatasetParser::PtrConst data_parser;
-  NBClassifier::Ptr nb_mle_classifier;
+  NBClassifier::Ptr nb_mle, nb_laplace;
   LRClassifier::Ptr lr_classifier;
   OutputPredictionSet::PtrConst nb_mle_prediction_set;
   OutputPredictionSet::PtrConst nb_laplace_prediction_set;
@@ -45,10 +45,14 @@ int main() {
                                                  Radon::kTestFlag +
                                                  filepath_suffix);
 
-  nb_mle_classifier = NBClassifier::NBClassifierNew(train_dataset);
-  nb_mle_classifier->testDatasetIs(test_dataset);
+  nb_mle = NBClassifier::NBClassifierNew(train_dataset, NBClassifier::kML);
+  nb_mle->testDatasetIs(test_dataset);
 
-  nb_mle_prediction_set = nb_mle_classifier->predictionSet();
+  nb_laplace = NBClassifier::NBClassifierNew(train_dataset,
+                                             NBClassifier::kLaplace);
+  nb_laplace->testDatasetIs(test_dataset);
+
+  nb_mle_prediction_set = nb_mle->predictionSet();
 
   cout << *nb_mle_prediction_set << endl;
 }
