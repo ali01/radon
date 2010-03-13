@@ -1,6 +1,10 @@
 #include <string>
 using std::string;
 
+#include <iostream>
+using std::cout;
+using std::endl;
+
 #include <simone/utility.h>
 
 #include "globals.h"
@@ -44,4 +48,6 @@ int main() {
   nb_mle_classifier->testDatasetIs(test_dataset);
 
   nb_mle_prediction = nb_mle_classifier->predictionSet();
+
+  // cout << nb_mle_classifier << endl;
 }
