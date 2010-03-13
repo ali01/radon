@@ -28,4 +28,26 @@ OutputPredictionSet::pushBack(OutputPrediction::PtrConst _prediction) {
   prediction_.pushBack(_prediction);
 }
 
+uint32_t
+OutputPredictionSet::correctTotal() const {
+  uint32_t sum = 0;
+  for (uint32_t i = 0; i < correct_.size(); ++i)
+    sum += correct_[i];
+  return sum;
+}
+
+uint32_t
+OutputPredictionSet::testedTotal() const {
+  uint32_t sum = 0;
+  for (uint32_t i = 0; i < tested_.size(); ++i)
+    sum += tested_[i];
+  return sum;
+}
+
+double
+OutputPredictionSet::percentAccuracy() const {
+  double correct = static_cast<double>(correctTotal());
+  return (correct / testedTotal()) * 100;
+}
+
 } /* end of namespace Radon */

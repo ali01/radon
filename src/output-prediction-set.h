@@ -26,6 +26,10 @@ public:
 private:
   OutputPredictionSet(uint32_t _range_size);
 
+  uint32_t correctTotal() const;
+  uint32_t testedTotal() const;
+  double percentAccuracy() const;
+
   /* data members */
 
   Vector<OutputPrediction::PtrConst> prediction_;
