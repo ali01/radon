@@ -20,10 +20,10 @@ int main() {
   string filepath_prefix, filepath_suffix;
   DatasetDescription::PtrConst train_dataset, test_dataset;
   DatasetParser::PtrConst data_parser;
-  NBClassifier::Ptr nb_classifier;
+  NBClassifier::Ptr nb_mle_classifier;
   LRClassifier::Ptr lr_classifier;
-  OutputPredictionSet::PtrConst nb_mle_prediction, nb_laplace_prediction,
-                          lr_prediction;
+  OutputPredictionSet::PtrConst nb_mle_prediction, nb_laplace_prediction;
+  OutputPredictionSet::PtrConst lr_prediction;
 
   filepath_prefix =  Radon::kDatasetPath;
   filepath_prefix += "/";
@@ -40,14 +40,8 @@ int main() {
                                                  Radon::kTestFlag +
                                                  filepath_suffix);
 
-  // nb_classifier = NBClassifier::NBClassifierNew(train_dataset);
-  // nb_classifier->testDatasetIs(test_dataset);
-  //
-  // nb_mle_prediction = nb_classifier->predictionSet(NBClassifier::kML);
-  // nb_laplace_prediction = nb_classifier->predictionSet(NBClassifier::kLaplace);
-  //
-  // lr_classifier = LRClassifier::LRClassifierNew(train_dataset);
-  // lr_classifier->testDatasetIs(test_dataset);
-  //
-  // lr_prediction = lr_classifier->predictionSet();
+  nb_mle_classifier = NBClassifier::NBClassifierNew(train_dataset);
+  nb_mle_classifier->testDatasetIs(test_dataset);
+
+  nb_mle_prediction = nb_mle_classifier->predictionSet();
 }
