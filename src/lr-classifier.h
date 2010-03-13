@@ -2,7 +2,7 @@
 #define LR_CLASSIFIER_H_FGVOYBBB
 
 #include "classifier.h"
-#include "prediction-set.h"
+#include "output-prediction-set.h"
 
 namespace Radon {
 
@@ -15,7 +15,7 @@ public:
     return new LRClassifier(training_data);
   }
 
-  PredictionSet::PtrConst predictionSet() { return NULL; }
+  OutputPredictionSet::PtrConst predictionSet() { return NULL; }
 
 private:
   LRClassifier(DatasetDescription::PtrConst training_data);

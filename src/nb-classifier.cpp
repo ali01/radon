@@ -2,7 +2,7 @@
 
 #include "frequency-table.h"
 #include "globals.h"
-#include "prediction-set.h"
+#include "output-prediction-set.h"
 
 namespace Radon {
 
@@ -42,27 +42,61 @@ NBClassifier::NBClassifier(DatasetDescription::PtrConst training_data) :
     out_marginal_.pushBack(joint_dist_[0]->outputMarginal(out_idx));
 }
 
-PredictionSet::PtrConst
+OutputPredictionSet::PtrConst
 NBClassifier::predictionSet() {
   /* if a prediction set for test_data_ has
      already been computed and is cached, return it */
   if (prediction_set_ != NULL)
     return prediction_set_;
 
-  prediction_set_ = PredictionSet::PredictionSetNew();
+  prediction_set_ = OutputPredictionSet::OutputPredictionSetNew();
 
   /* if test_data_ is NULL, return an empty prediction */
   if (test_data_ == NULL)
     return prediction_set_;
 
-  compute_prediction_set();
+  /* compute prediction set for each input vector in TEST_DATA */
+  OutputPrediction::Ptr pd;
+  for (uint32_t vec = 0; vec < test_data_->vectorCount(); ++vec) {
+    pd = prediction(test_data_, vec);
+    prediction_set_->pushBack(pd);
+  }
 
   return prediction_set_;
 }
 
-void
-NBClassifier::compute_prediction_set() const {
+/* computes an output prediction for the given INPUT_VECTOR in DATASET */
+OutputPrediction::Ptr
+NBClassifier::prediction(DatasetDescription::PtrConst _dataset,
+                         uint32_t _input_vector) const {
+  OutputPrediction::Ptr pd;
+  Observation pd_obs = joint_prob_arg_max(_dataset, _input_vector);
+  pd = OutputPrediction::OutputPredictionNew(_dataset, _input_vector, pd_obs);
+  return pd;
+}
 
+/* for a given INPUT_VECTOR in DATASET, returns the value of OUTPUT_VALUE
+   that yields the maximum return value possible when passed into
+   joint_prob_ln() */
+Observation
+NBClassifier::joint_prob_arg_max(DatasetDescription::PtrConst _dataset,
+                                 uint32_t _input_vector) const {
+  Observation arg_max;
+
+  /* initialized with a probability of 0.0; ln(0.0) = DOUBLE_MIN */
+  ProbabilityLn p_max(0.0), curr(0.0);
+
+  /* iterate over possible return values of input_cond_ln_product and
+     keep track of maximum */
+  for (uint32_t out_cond; out_cond < range_size_; ++out_cond) {
+    curr = joint_prob_ln(_dataset, _input_vector, out_cond);
+    if (curr > p_max){
+      arg_max = out_cond;
+      p_max = curr;
+    }
+  }
+
+  return arg_max;
 }
 
 /* returns the natural log of the probability P(X,Y) = P(X | Y) * P(Y) where
@@ -103,30 +137,6 @@ NBClassifier::joint_prob_ln(DatasetDescription::PtrConst _dataset,
   p_ln *= ProbabilityLn(p);
 
   return p_ln;
-}
-
-/* for a given INPUT_VECTOR in DATASET, returns the value of OUTPUT_VALUE
-   that yields the maximum return value possible when passed into
-   joint_prob_ln() */
-Observation
-NBClassifier::joint_prob_arg_max(DatasetDescription::PtrConst _dataset,
-                                 uint32_t _input_vector) const {
-  Observation arg_max;
-
-  /* initialized with a probability of 0.0; ln(0.0) = DOUBLE_MIN */
-  ProbabilityLn p_max(0.0), curr(0.0);
-
-  /* iterate over possible return values of input_cond_ln_product and
-     keep track of maximum */
-  for (uint32_t out_cond; out_cond < range_size_; ++out_cond) {
-    curr = joint_prob_ln(_dataset, _input_vector, out_cond);
-    if (curr > p_max){
-      arg_max = out_cond;
-      p_max = curr;
-    }
-  }
-
-  return arg_max;
 }
 
 } /* end of namespace Radon */

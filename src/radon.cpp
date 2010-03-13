@@ -9,12 +9,12 @@ using std::string;
 #include "dataset-description.h"
 #include "lr-classifier.h"
 #include "nb-classifier.h"
-#include "prediction-set.h"
+#include "output-prediction-set.h"
 using Radon::DatasetParser;
 using Radon::DatasetDescription;
 using Radon::LRClassifier;
 using Radon::NBClassifier;
-using Radon::PredictionSet;
+using Radon::OutputPredictionSet;
 
 int main() {
   string filepath_prefix, filepath_suffix;
@@ -22,7 +22,7 @@ int main() {
   DatasetParser::PtrConst data_parser;
   NBClassifier::Ptr nb_classifier;
   LRClassifier::Ptr lr_classifier;
-  PredictionSet::PtrConst nb_mle_prediction, nb_laplace_prediction,
+  OutputPredictionSet::PtrConst nb_mle_prediction, nb_laplace_prediction,
                           lr_prediction;
 
   filepath_prefix =  Radon::kDatasetPath;

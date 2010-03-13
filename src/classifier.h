@@ -4,7 +4,7 @@
 #include <simone/ptr_interface.h>
 
 #include "dataset-description.h"
-#include "prediction-set.h"
+#include "output-prediction-set.h"
 
 namespace Radon {
 
@@ -15,7 +15,7 @@ public:
 
   void testDatasetIs(DatasetDescription::PtrConst _data);
 
-  virtual PredictionSet::PtrConst predictionSet() = 0;
+  virtual OutputPredictionSet::PtrConst predictionSet() = 0;
 
 protected:
   Classifier(DatasetDescription::PtrConst _data);
@@ -24,7 +24,7 @@ protected:
   /* data members */
   DatasetDescription::PtrConst training_data_;
   DatasetDescription::PtrConst test_data_;
-  PredictionSet::PtrConst prediction_set_;
+  OutputPredictionSet::Ptr prediction_set_;
 
 private:
   /* disallowed operations */
