@@ -1,7 +1,6 @@
 #include "nb-classifier.h"
 
 #include "frequency-table.h"
-#include "globals.h"
 #include "output-prediction-set.h"
 
 namespace Radon {
@@ -9,7 +8,7 @@ namespace Radon {
 /* constructor trains learning algorithm with TRAINING_DATA */
 NBClassifier::NBClassifier(DatasetDescription::PtrConst training_data,
                            EstMode _mode) :
-  Classifier(training_data), domain_size_(kDomainSize), range_size_(kRangeSize)
+  Classifier(training_data)
 {
   FrequencyTable::Ptr freq_table;
   JointDistTable::Ptr joint_dist_table;
@@ -20,9 +19,9 @@ NBClassifier::NBClassifier(DatasetDescription::PtrConst training_data,
     /* creating frequency table for single variable;
        if MODE is equal to laplace, initialize frequency table values to 1
        rather than to 0 */
-    Frequency init_value = (_mode == kLaplace) ? Frequency(1) : Frequency(0);
+    Frequency init_freq = (_mode == kLaplace) ? Frequency(1) : Frequency(0);
     freq_table = FrequencyTable::FrequencyTableNew(domain_size_, range_size_,
-                                                   init_value);
+                                                   init_freq);
 
     /* populating frequency table by tracking
        occurences througout every data vector */

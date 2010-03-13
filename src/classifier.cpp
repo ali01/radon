@@ -1,9 +1,13 @@
 #include "classifier.h"
 
+#include "globals.h"
+
 namespace Radon {
 
 Classifier::Classifier(DatasetDescription::PtrConst _training_data) :
-  training_data_(_training_data) {}
+  training_data_(_training_data),
+  domain_size_(kDomainSize),
+  range_size_(kRangeSize) {}
 
 void
 Classifier::testDatasetIs(DatasetDescription::PtrConst _data) {

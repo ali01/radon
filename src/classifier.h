@@ -26,6 +26,9 @@ protected:
   DatasetDescription::PtrConst test_data_;
   OutputPredictionSet::Ptr prediction_set_;
 
+  uint32_t domain_size_;
+  uint32_t range_size_;
+
 private:
   /* disallowed operations */
   Classifier(const Classifier&);
