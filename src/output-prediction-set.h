@@ -1,6 +1,8 @@
 #ifndef PREDICTION_H_DN1M8644
 #define PREDICTION_H_DN1M8644
 
+#include <ostream>
+
 #include <boost/multi_array.hpp>
 using boost::multi_array;
 
@@ -23,12 +25,16 @@ public:
 
   void pushBack(OutputPrediction::PtrConst _prediction);
 
+  friend ostream& operator<<(ostream&, const OutputPredictionSet&);
+
 private:
   OutputPredictionSet(uint32_t _range_size);
 
+  uint32_t rangeSize() const { return tested_.size(); }
+
   uint32_t correctTotal() const;
   uint32_t testedTotal() const;
-  double percentAccuracy() const;
+  double accuracy() const;
 
   /* data members */
 

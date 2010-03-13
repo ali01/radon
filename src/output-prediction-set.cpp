@@ -1,5 +1,9 @@
 #include "output-prediction-set.h"
 
+#include <iostream>
+using std::cout;
+using std::endl;
+
 namespace Radon {
 
 OutputPredictionSet::OutputPredictionSet(uint32_t _range_size) {
@@ -28,6 +32,30 @@ OutputPredictionSet::pushBack(OutputPrediction::PtrConst _prediction) {
   prediction_.pushBack(_prediction);
 }
 
+ostream&
+operator<<(ostream &out, const OutputPredictionSet &ps) {
+  for (uint32_t i = 0; i < ps.rangeSize(); ++i) {
+    /* print class number (expected outcome) */
+    cout << "Class " << i << ": ";
+
+    /* print total number of times class i was tested */
+    cout << "tested " << ps.tested_[i] << ", ";
+
+    /* print the total number of times class i was correctly predicted */
+    cout << "correctly classified " << ps.correct_[i] << "\n";
+  }
+
+  /* overall statistics */
+  cout << "Overall: tested " << ps.testedTotal() << ", ";
+  cout << "correctly classified " << ps.correctTotal() << "\n";
+
+  /* accuracy */
+  cout << "Accuracy = " << ps.accuracy() << "\n";
+  return out;
+}
+
+/* private member functions */
+
 uint32_t
 OutputPredictionSet::correctTotal() const {
   uint32_t sum = 0;
@@ -45,9 +73,9 @@ OutputPredictionSet::testedTotal() const {
 }
 
 double
-OutputPredictionSet::percentAccuracy() const {
+OutputPredictionSet::accuracy() const {
   double correct = static_cast<double>(correctTotal());
-  return (correct / testedTotal()) * 100;
+  return correct / testedTotal();
 }
 
 } /* end of namespace Radon */
