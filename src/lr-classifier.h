@@ -2,7 +2,7 @@
 #define LR_CLASSIFIER_H_FGVOYBBB
 
 #include "classifier.h"
-#include "lr-prediction-set.h"
+#include "prediction-set.h"
 
 namespace Radon {
 

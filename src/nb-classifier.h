@@ -34,7 +34,7 @@ private:
   NBClassifier(DatasetDescription::PtrConst training_data);
 
   /* private member functions */
-  PredictionSet::PtrConst prediction_set() const;
+  void compute_prediction_set() const;
 
   /* returns the product, in log space, over all P(X_i=x, Y)
      where Y = OUT_CONDITION */

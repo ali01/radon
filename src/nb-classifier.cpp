@@ -2,7 +2,7 @@
 
 #include "frequency-table.h"
 #include "globals.h"
-#include "nb-prediction-set.h"
+#include "prediction-set.h"
 
 namespace Radon {
 
@@ -49,18 +49,20 @@ NBClassifier::predictionSet() {
   if (prediction_set_ != NULL)
     return prediction_set_;
 
-  prediction_set_ = NBPredictionSet::NBPredictionSetNew();
+  prediction_set_ = PredictionSet::PredictionSetNew();
 
   /* if test_data_ is NULL, return an empty prediction */
   if (test_data_ == NULL)
     return prediction_set_;
 
-  return prediction_set();
+  compute_prediction_set();
+
+  return prediction_set_;
 }
 
-PredictionSet::PtrConst
-NBClassifier::prediction_set() const {
-  return NULL;
+void
+NBClassifier::compute_prediction_set() const {
+
 }
 
 /* returns the product, in log space, over all P(X_i=x, Y)
