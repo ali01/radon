@@ -49,5 +49,5 @@ int main() {
 
   nb_mle_prediction = nb_mle_classifier->predictionSet();
 
-  // cout << nb_mle_classifier << endl;
+  cout << nb_mle_classifier << endl;
 }
