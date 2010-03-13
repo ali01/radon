@@ -36,17 +36,19 @@ private:
   /* private member functions */
   void compute_prediction_set() const;
 
-  /* returns the product, in log space, over all P(X_i=x, Y)
-     where Y = OUT_CONDITION */
-  ProbabilityLn input_cond_ln_product(DatasetDescription::PtrConst _dataset,
-                                      uint32_t _data_vector,
-                                      Observation _out_condition) const;
+  /* returns the natural log of the probability P(X,Y) = P(X | Y) * P(Y) where
+     X = INPUT_VECTOR and Y = OUTPUT_VALUE. Note that, because the Naive Bayes
+     assumption, P(X | Y) is approximated by the product over all P(X_i | Y)
+     or the sum of their logs. */
+  ProbabilityLn joint_prob_ln(DatasetDescription::PtrConst _dataset,
+                              uint32_t _input_vector,
+                              Observation _output_value) const;
 
-  /* for a given DATA_VECTOR in DATASET, returns the value of OUT_CONDITION
+  /* for a given INPUT_VECTOR in DATASET, returns the value of OUTPUT_VALUE
      that yields the maximum return value possible when passed into
-     input_cond_ln_product() */
-  Observation output_arg_max(DatasetDescription::PtrConst _dataset,
-                             uint32_t _data_vector) const;
+     joint_prob_ln() */
+  Observation joint_prob_arg_max(DatasetDescription::PtrConst _dataset,
+                                 uint32_t _input_vector) const;
 
   /* data members */
   /* vector of each variable's joint probability distribution */

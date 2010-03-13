@@ -65,17 +65,19 @@ NBClassifier::compute_prediction_set() const {
 
 }
 
-/* returns the product, in log space, over all P(X_i=x, Y)
-   where x = IN_VAL and Y = out_condition */
+/* returns the natural log of the probability P(X,Y) = P(X | Y) * P(Y) where
+   X = INPUT_VECTOR and Y = OUTPUT_VALUE. Note that, because the Naive Bayes
+   assumption, P(X | Y) is approximated by the product over all P(X_i | Y)
+   or the sum of their logs. */
 ProbabilityLn
-NBClassifier::input_cond_ln_product(DatasetDescription::PtrConst _dataset,
-                                    uint32_t _data_vector,
-                                    Observation _out_condition) const {
+NBClassifier::joint_prob_ln(DatasetDescription::PtrConst _dataset,
+                            uint32_t _input_vector,
+                            Observation _output_value) const {
   JointDistTable::Ptr joint_dist;
   Observation in_val;
   Probability p;
 
-  /* initialized with a probability of 1.0 -- ln(1.0) = 0 */
+  /* initialized with a probability of 1.0; ln(1.0) = 0 */
   ProbabilityLn p_ln(1.0);
 
   /* iterate over the joint probability distribution of each variable,
@@ -85,37 +87,42 @@ NBClassifier::input_cond_ln_product(DatasetDescription::PtrConst _dataset,
     /* joint probability distribution for variable X_i */
     joint_dist = joint_dist_[dist_idx];
 
-    /* input value X_i at the specified DATA_VECTOR in DATASET */
-    in_val = _dataset->inputObservation(_data_vector, dist_idx);
+    /* input value X_i at the specified INPUT_VECTOR in DATASET */
+    in_val = _dataset->inputObservation(_input_vector, dist_idx);
 
     /* Probability p = P(X_i | Y) */
-    p = joint_dist->inputConditional(in_val, _out_condition);
+    p = joint_dist->inputConditional(in_val, _output_value);
 
-    /* ProbabilityLn p_ln = ln(p) */
+    /* increment P_LN by ln(P) */
     p_ln += ProbabilityLn(p);
   }
+
+  /* P_LN is currently equal to the sum of the natural logs of P(X_i | Y)
+     for all i. Multiply P_LN by the log of the marginal probability of Y. */
+  p = joint_dist->outputMarginal(_output_value);
+  p_ln *= ProbabilityLn(p);
 
   return p_ln;
 }
 
-/* for a given DATA_VECTOR in DATASET, returns the value of OUT_CONDITION
+/* for a given INPUT_VECTOR in DATASET, returns the value of OUTPUT_VALUE
    that yields the maximum return value possible when passed into
-   input_cond_ln_product() */
+   joint_prob_ln() */
 Observation
-NBClassifier::output_arg_max(DatasetDescription::PtrConst _dataset,
-                             uint32_t _data_vector) const {
+NBClassifier::joint_prob_arg_max(DatasetDescription::PtrConst _dataset,
+                                 uint32_t _input_vector) const {
   Observation arg_max;
 
-  /* initialized with a probability of 0.0 -- ln(0.0) = DOUBLE_MIN */
+  /* initialized with a probability of 0.0; ln(0.0) = DOUBLE_MIN */
   ProbabilityLn p_max(0.0), curr(0.0);
 
   /* iterate over possible return values of input_cond_ln_product and
      keep track of maximum */
   for (uint32_t out_cond; out_cond < range_size_; ++out_cond) {
-    curr = input_cond_ln_product(_dataset, _data_vector, out_cond);
+    curr = joint_prob_ln(_dataset, _input_vector, out_cond);
     if (curr > p_max){
-      p_max = curr;
       arg_max = out_cond;
+      p_max = curr;
     }
   }
 

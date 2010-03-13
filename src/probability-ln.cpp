@@ -1,5 +1,6 @@
 #include "probability-ln.h"
 
+#include <cmath>
 #include <limits>
 
 namespace Radon {
