@@ -18,6 +18,12 @@ public:
     return new OutputPrediction(_dataset, _input_vector, _output_prediction);
   }
 
+  Observation predicted() const { return output_prediction_; }
+
+  /* returns the value that was expected from the input_vector given in the
+     data. This may or may not be equal to the computed prediction. */
+  Observation expected() const;
+
 private:
   OutputPrediction(DatasetDescription::PtrConst _dataset,
                    uint32_t _input_vector, Observation _output_prediction);

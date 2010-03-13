@@ -9,4 +9,9 @@ OutputPrediction::OutputPrediction(DatasetDescription::PtrConst _dataset,
   input_vector_(_input_vector),
   output_prediction_(_output_prediction) {}
 
+Observation
+OutputPrediction::expected() const {
+  return dataset_->outputObservation(input_vector_);
+}
+
 } /* end of namespace Radon */

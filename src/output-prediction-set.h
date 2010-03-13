@@ -17,24 +17,22 @@ public:
   typedef Simone::Ptr<const OutputPredictionSet> PtrConst;
   typedef Simone::Ptr<OutputPredictionSet> Ptr;
 
-  static Ptr OutputPredictionSetNew() {
-    return new OutputPredictionSet();
+  static Ptr OutputPredictionSetNew(uint32_t _range_size) {
+    return new OutputPredictionSet(_range_size);
   }
 
-  size_t size() const { return prediction_.size(); }
   void pushBack(OutputPrediction::PtrConst _prediction);
 
 private:
-  const static uint32_t kStatsIndexCorrect = 0;
-  const static uint32_t kStatsIndexTested = 1;
-
-  OutputPredictionSet() {}
+  OutputPredictionSet(uint32_t _range_size);
 
   /* data members */
+
   Vector<OutputPrediction::PtrConst> prediction_;
 
-  multi_array<uint32_t,2> stats_;
-
+  /* prediction set statistics */
+  Vector<uint32_t> correct_;
+  Vector<uint32_t> tested_;
 
   /* disallowed operations */
   OutputPredictionSet(const OutputPredictionSet&);

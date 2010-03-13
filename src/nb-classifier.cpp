@@ -49,7 +49,7 @@ NBClassifier::predictionSet() {
   if (prediction_set_ != NULL)
     return prediction_set_;
 
-  prediction_set_ = OutputPredictionSet::OutputPredictionSetNew();
+  prediction_set_ = OutputPredictionSet::OutputPredictionSetNew(range_size_);
 
   /* if test_data_ is NULL, return an empty prediction */
   if (test_data_ == NULL)
