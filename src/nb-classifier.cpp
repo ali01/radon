@@ -55,12 +55,20 @@ NBClassifier::predictionSet(EstMode _mode) {
   if (test_data_ == NULL)
     return prediction_set_;
 
-  return compute_prediction_set(_mode);
+  return prediction_set(_mode);
 }
 
 PredictionSet::PtrConst
-NBClassifier::compute_prediction_set(EstMode _mode) {
+NBClassifier::prediction_set(EstMode _mode) {
   return NULL;
+}
+
+ProbabilityLn
+NBClassifier::input_conditional_ln_product(uint32_t var_idx, uint32_t in_val,
+                                           uint32_t out_condition) {
+  JointDistTable::Ptr joint_dist = joint_dist_[var_idx];
+  Probability p = joint_dist->inputConditional(in_val, out_condition);
+  return ProbabilityLn(p);
 }
 
 } /* end of namespace Radon */

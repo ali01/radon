@@ -10,6 +10,7 @@
 namespace Radon {
 
 class ProbabilityLn : public Simone::Numeric<ProbabilityLn,double> {
+public:
   ProbabilityLn(Probability p);
 };
 

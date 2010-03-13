@@ -10,6 +10,7 @@
 #include "dataset-description.h"
 #include "joint-dist-table.h"
 #include "probability.h"
+#include "probability-ln.h"
 
 namespace Radon {
 
@@ -36,8 +37,9 @@ private:
   PredictionSet::PtrConst predictionSet() { return predictionSet(kLaplace); }
 
   /* private member functions */
-  PredictionSet::PtrConst compute_prediction_set(EstMode _mode);
-
+  PredictionSet::PtrConst prediction_set(EstMode _mode);
+  ProbabilityLn input_conditional_ln_product(uint32_t var_idx, uint32_t in_val,
+                                             uint32_t out_condition);
 
   /* data members */
   /* vector of each variable's joint probability distribution */

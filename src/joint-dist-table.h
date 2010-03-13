@@ -20,8 +20,8 @@ public:
     return new JointDistTable(_freq_table);
   }
 
-  Probability inputConditional(uint32_t in_idx, uint32_t out_idx) const;
-  Probability outputConditional(uint32_t out_idx, uint32_t in_idx) const;
+  Probability inputConditional(uint32_t in_idx, uint32_t out_condition) const;
+  Probability outputConditional(uint32_t out_idx, uint32_t in_condition) const;
 
   Probability inputMarginal(uint32_t in_idx) const;
   Probability outputMarginal(uint32_t out_idx) const;
