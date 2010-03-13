@@ -21,8 +21,10 @@ public:
     return new JointDistTable(_freq_table);
   }
 
-  Probability inputConditional(Observation in_idx, Observation out_condition) const;
-  Probability outputConditional(Observation out_idx, Observation in_condition) const;
+  Probability inputConditional(Observation in_idx,
+                               Observation out_condition) const;
+  Probability outputConditional(Observation out_idx,
+                                Observation in_condition) const;
 
   Probability inputMarginal(Observation in_idx) const;
   Probability outputMarginal(Observation out_idx) const;

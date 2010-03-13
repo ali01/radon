@@ -42,9 +42,11 @@ private:
                                       uint32_t _data_vector,
                                       Observation _out_condition) const;
 
-  /* for a given returns the value of OUT_CONDITION that yields the maximum
-     return value possible when passed into input_cond_ln_product() */
-  uint32_t output_arg_max() const;
+  /* for a given DATA_VECTOR in DATASET, returns the value of OUT_CONDITION
+     that yields the maximum return value possible when passed into
+     input_cond_ln_product() */
+  uint32_t output_arg_max(DatasetDescription::PtrConst _dataset,
+                          uint32_t data_vector) const;
 
   /* data members */
   /* vector of each variable's joint probability distribution */

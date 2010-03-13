@@ -78,8 +78,9 @@ NBClassifier::input_cond_ln_product(DatasetDescription::PtrConst _dataset,
   /* initialized with a probability of 1.0 -- ln(1.0) = 0 */
   ProbabilityLn p_ln(1.0);
 
-  /* iterate over the joint probability distribution of each variable, compute the
-     variable's conditional probability P(X_i | Y), and add it's log into p_ln. */
+  /* iterate over the joint probability distribution of each variable,
+     compute the variable's conditional probability P(X_i | Y), and add
+     it's log into p_ln. */
   for (uint32_t dist_idx = 0; dist_idx < joint_dist_.size(); ++dist_idx) {
     /* joint probability distribution for variable X_i */
     joint_dist = joint_dist_[dist_idx];
@@ -98,7 +99,8 @@ NBClassifier::input_cond_ln_product(DatasetDescription::PtrConst _dataset,
 }
 
 uint32_t
-NBClassifier::output_arg_max() const {
+NBClassifier::output_arg_max(DatasetDescription::PtrConst _dataset,
+                             uint32_t data_vector) const {
   return 0;
 }
 
