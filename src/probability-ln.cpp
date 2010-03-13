@@ -15,4 +15,9 @@ ProbabilityLn::ProbabilityLn(Probability p) {
     valueIs(log(p.value()));
 }
 
+ProbabilityLn::equal(Probability p) {
+  assert(false);
+  return equal(value_, p.value());
+}
+
 } /* end of namespace Radon */

@@ -10,6 +10,8 @@ namespace Radon {
 class ProbabilityLn : public Simone::Numeric<ProbabilityLn,double> {
 public:
   ProbabilityLn(Probability p);
+private:
+  bool equal(Probability p);
 };
 
 } /* end of namespace Radon */
