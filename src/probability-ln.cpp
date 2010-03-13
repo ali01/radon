@@ -4,20 +4,19 @@
 #include <limits>
 
 #include <simone/math.h>
-using Simone::math::equal;
 
 namespace Radon {
 
 ProbabilityLn::ProbabilityLn(Probability p) {
-  if (equal(p.value(), 0.0))
+  if (Simone::math::equal(p.value(), 0.0))
     valueIs(numeric_limits<double>::min());
   else
     valueIs(log(p.value()));
 }
 
-ProbabilityLn::equal(Probability p) {
-  assert(false);
-  return equal(value_, p.value());
+bool
+ProbabilityLn::equal(double p) const {
+  return Simone::math::equal(value_, p);
 }
 
 } /* end of namespace Radon */

@@ -11,6 +11,8 @@ class Probability : public Simone::Numeric<Probability,double> {
 public:
   Probability(double v=1.0) : Simone::Numeric<Probability,double>(v) {}
   Probability(Frequency num, Frequency den);
+private:
+  bool equal(double v) const;
 };
 
 } /* end of namespace radon */

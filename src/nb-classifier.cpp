@@ -128,6 +128,13 @@ NBClassifier::joint_prob_ln(DatasetDescription::PtrConst _dataset,
     /* Probability p = P(X_i | Y) */
     p = joint_dist->inputConditional(in_val, _output_value);
 
+    /* if p is equal to 0.0, the entire product will be equal to zero. */
+    if (p == Probability(0.0)) {
+      /* log of zero is -Inf or DOUBLE_MIN */
+      p_ln = ProbabilityLn(p);
+      break;
+    }
+
     /* increment P_LN by ln(P) */
     p_ln += ProbabilityLn(p);
   }
