@@ -71,6 +71,7 @@ NBClassifier::prediction(DatasetDescription::PtrConst _dataset,
                          uint32_t _input_vector) const {
   OutputPrediction::Ptr pd;
   Observation pd_obs = joint_prob_arg_max(_dataset, _input_vector);
+
   pd = OutputPrediction::OutputPredictionNew(_dataset, _input_vector, pd_obs);
   return pd;
 }
@@ -88,8 +89,9 @@ NBClassifier::joint_prob_arg_max(DatasetDescription::PtrConst _dataset,
 
   /* iterate over possible return values of input_cond_ln_product and
      keep track of maximum */
-  for (uint32_t out_cond; out_cond < range_size_; ++out_cond) {
+  for (uint32_t out_cond = 0; out_cond < range_size_; ++out_cond) {
     curr = joint_prob_ln(_dataset, _input_vector, out_cond);
+    printf("curr = %f\n", curr.value());
     if (curr > p_max){
       arg_max = out_cond;
       p_max = curr;
@@ -100,7 +102,7 @@ NBClassifier::joint_prob_arg_max(DatasetDescription::PtrConst _dataset,
 }
 
 /* returns the natural log of the probability P(X,Y) = P(X | Y) * P(Y) where
-   X = INPUT_VECTOR and Y = OUTPUT_VALUE. Note that, because the Naive Bayes
+   X = INPUT_VECTOR and Y = OUTPUT_VALUE. Note that, because of the Naive Bayes
    assumption, P(X | Y) is approximated by the product over all P(X_i | Y)
    or the sum of their logs. */
 ProbabilityLn
@@ -129,6 +131,9 @@ NBClassifier::joint_prob_ln(DatasetDescription::PtrConst _dataset,
 
     /* increment P_LN by ln(P) */
     p_ln += ProbabilityLn(p);
+
+    printf("p = %f\n", p.value());
+    printf("p_ln = %f\n", p_ln.value());
   }
 
   /* P_LN is currently equal to the sum of the natural logs of P(X_i | Y)
