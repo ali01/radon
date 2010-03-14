@@ -19,4 +19,15 @@ DatasetDescription::outputObservation(uint32_t data_vector) const {
   return output_[data_vector];
 }
 
+DatasetDescription::Instance::PtrConst
+DatasetDescription::instance(uint32_t data_vector) const {
+  Instance::Ptr instance = Instance::VectorNew();
+
+  /* populate instance with each var's observation */
+  for (uint32_t var = 0; var < vars_; ++var)
+    instance->pushBack(data_[data_vector][var]);
+
+  return instance;
+}
+
 } /* end of namespace Radon */
