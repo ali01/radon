@@ -1,0 +1,10 @@
+DIR_EU7DW75N := logistic-regression
+SUB_EU7DW75N :=
+
+SRCS += $(wildcard $(DIR_EU7DW75N)/*.$(EXT))
+
+MK_EU7DW75N := $(foreach sdir,$(SUB_EU7DW75N),$(wildcard $(DIR_EU7DW75N)/$(sdir)/*.$(SUBDIR_EXT)))
+ifneq ($(MK_EU7DW75N),)
+$(info -- including subdirectory makefiles ($(DIR_EU7DW75N)): $(MK_EU7DW75N))
+include $(MK_EU7DW75N)
+endif

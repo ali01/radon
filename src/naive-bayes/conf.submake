@@ -1,0 +1,10 @@
+DIR_160TNXGZ := naive-bayes
+SUB_160TNXGZ :=
+
+SRCS += $(wildcard $(DIR_160TNXGZ)/*.$(EXT))
+
+MK_160TNXGZ := $(foreach sdir,$(SUB_160TNXGZ),$(wildcard $(DIR_160TNXGZ)/$(sdir)/*.$(SUBDIR_EXT)))
+ifneq ($(MK_160TNXGZ),)
+$(info -- including subdirectory makefiles ($(DIR_160TNXGZ)): $(MK_160TNXGZ))
+include $(MK_160TNXGZ)
+endif
