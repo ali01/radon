@@ -1,6 +1,6 @@
 #include "lr-classifier.h"
 
-#include "gradient.h"
+#include "gradient-delta.h"
 
 namespace Radon {
 
@@ -10,10 +10,10 @@ LRClassifier::LRClassifier(DatasetDescription::PtrConst _training_data,
   Classifier(_training_data, _domain_size, _range_size),
   beta_(BetaSet::BetaSetNew(_domain_size))
 {
-  Gradient::PtrConst gradient;
+  GradientDelta::PtrConst gradient;
   for (uint32_t epoch = 0; epoch < _epochs; ++epoch) {
     /* initialize batch gradient for epoch */
-    gradient = Gradient::GradientNew(training_data_, beta_);
+    gradient = GradientDelta::GradientDeltaNew(training_data_, beta_);
     
   }
 }

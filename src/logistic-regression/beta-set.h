@@ -9,6 +9,9 @@ using Simone::Vector;
 
 namespace Radon {
 
+/* forward declaration */
+class GradientDelta;
+
 class BetaSet : public Simone::PtrInterface<BetaSet> {
 public:
   typedef Simone::Ptr<const BetaSet> PtrConst;
@@ -19,6 +22,8 @@ public:
   static Ptr BetaSetNew(size_t _domain_size) {
     return new BetaSet(_domain_size);
   }
+
+  void betaInc(Simone::Ptr<const GradientDelta> _delta, double learning_rate);
 
   double logit(DataInstance::PtrConst _instance) const;
 

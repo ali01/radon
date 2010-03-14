@@ -18,7 +18,8 @@ public:
   /* value defines the default number of passes over the data that the algorithm
      will make in its training phase while learning the parameters of its
      predictive model */
-  static const uint32_t kEpochsDefault = 1e3;
+  static const uint32_t kEpochsDefault = 1e4;
+  static const double kLearningRateDefault = 1.0e-4;
 
   static Ptr LRClassifierNew(DatasetDescription::PtrConst training_data,
                              size_t _domain_size, size_t _range_size,
