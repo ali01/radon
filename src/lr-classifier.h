@@ -20,6 +20,9 @@ public:
 private:
   LRClassifier(DatasetDescription::PtrConst training_data);
 
+  /* data members */
+
+
   /* disallowed operations */
   LRClassifier(const LRClassifier&);
   void operator=(const LRClassifier&);

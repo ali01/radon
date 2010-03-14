@@ -24,7 +24,7 @@ NBClassifier::NBClassifier(DatasetDescription::PtrConst training_data,
                                                    init_freq);
 
     /* populating frequency table by tracking
-       occurences througout every data vector */
+       occurences throughout every data vector */
     for (uint32_t vec = 0; vec < training_data_->vectorCount(); ++vec) {
       in_value = training_data_->inputObservation(vec, var);
       out_value = training_data_->outputObservation(vec);

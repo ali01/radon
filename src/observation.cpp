@@ -3,6 +3,6 @@
 
 namespace Radon {
 
-const Observation Observation::kInvalid(numeric_limits<int>::max());
+const Observation Observation::kInvalid(numeric_limits<uint32_t>::max());
 
 } /* end of namespace Radon */
