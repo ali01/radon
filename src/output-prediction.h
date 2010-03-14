@@ -10,11 +10,10 @@ namespace Radon {
 class OutputPrediction : public Simone::PtrInterface<OutputPrediction> {
 public:
   typedef Simone::Ptr<const OutputPrediction> PtrConst;
-  typedef Simone::Ptr<OutputPrediction> Ptr;
 
-  static Ptr OutputPredictionNew(DatasetDescription::PtrConst _dataset,
-                                 uint32_t _input_vector,
-                                 Observation _output_prediction) {
+  static PtrConst OutputPredictionNew(DatasetDescription::PtrConst _dataset,
+                                      uint32_t _input_vector,
+                                      Observation _output_prediction) {
     return new OutputPrediction(_dataset, _input_vector, _output_prediction);
   }
 

@@ -62,7 +62,7 @@ NBClassifier::predictionSet() {
     return prediction_set_;
 
   /* compute prediction set for each input vector in TEST_DATA */
-  OutputPrediction::Ptr pd;
+  OutputPrediction::PtrConst pd;
   for (uint32_t vec = 0; vec < test_data_->vectorCount(); ++vec) {
     pd = prediction(test_data_, vec);
     prediction_set_->pushBack(pd);
@@ -72,10 +72,10 @@ NBClassifier::predictionSet() {
 }
 
 /* computes an output prediction for the given INPUT_VECTOR in DATASET */
-OutputPrediction::Ptr
+OutputPrediction::PtrConst
 NBClassifier::prediction(DatasetDescription::PtrConst _dataset,
                          uint32_t _input_vector) const {
-  OutputPrediction::Ptr pd;
+  OutputPrediction::PtrConst pd;
   Observation pd_obs = joint_prob_arg_max(_dataset, _input_vector);
 
   pd = OutputPrediction::OutputPredictionNew(_dataset, _input_vector, pd_obs);

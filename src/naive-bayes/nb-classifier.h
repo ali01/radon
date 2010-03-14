@@ -41,8 +41,8 @@ private:
   /* private member functions */
 
   /* computes an output prediction for the given INPUT_VECTOR in DATASET */
-  OutputPrediction::Ptr prediction(DatasetDescription::PtrConst _dataset,
-                                   uint32_t _input_vector) const;
+  OutputPrediction::PtrConst prediction(DatasetDescription::PtrConst _dataset,
+                                        uint32_t _input_vector) const;
 
   /* for a given INPUT_VECTOR in DATASET, returns the value of OUTPUT_VALUE
      that yields the maximum return value possible when passed into
