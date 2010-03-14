@@ -1,4 +1,5 @@
 #include "gradient.h"
+#include <cmath>
 
 namespace Radon {
 
@@ -13,24 +14,27 @@ Gradient::Gradient(DatasetDescription::PtrConst _dataset,
 
   /* iterate over each data instance (input vector) in the training dataset,
      and add it's contribution to the gradient vector */
-  DataInstance::PtrConst data_instance;
+  DataInstance::PtrConst instance;
   for (uint32_t vec = 0; vec < _dataset->vectorCount(); ++vec) {
     /* data instance with x_0 = 1 (x_0 is paired with alpha in z) */
-    data_instance = dataInstance(_dataset, vec);
+    instance = data_instance(_dataset, vec);
 
     /* iterate over each observation in the instance vector and add its
        individual contribution to the batch gradient using the gradient
        equation for the log conditional likelihood of the data:
        G = x_j(y - 1 / (1 + e^{-z}))
          = x_j(y - P(Y=1 | X)) */
-    for (size_t var = 0; var < data_instance->size(); ++var) {
+    for (size_t var = 0; var < instance->size(); ++var) {
 
     }
   }
 }
 
+/* returns a data instance (that is, a vector of data points or observations)
+   that corresponds to the input vector at index IDX in DATASET */
 Gradient::DataInstance::PtrConst
-Gradient::dataInstance(DatasetDescription::PtrConst _dataset, uint32_t idx) {
+Gradient::data_instance(DatasetDescription::PtrConst _dataset,
+                        uint32_t idx) const {
   DataInstance::PtrConst instance_const = _dataset->instance(idx);
 
   /* note that, for the purpose of logistic regression, the length of a data
@@ -44,6 +48,24 @@ Gradient::dataInstance(DatasetDescription::PtrConst _dataset, uint32_t idx) {
 
   /* version returned is PtrConst, as it should never again be modified */
   return instance_const;
+}
+
+/* returns a gradient delta for the given input vector,
+   set of beta parameters, and values of X and Y */
+double
+Gradient::gradient_delta(DataInstance::PtrConst _instance,
+                         BetaSet::PtrConst _beta_set,
+                         Observation _in_x, Observation _out_y) {
+  double x = static_cast<double>(_in_x.value());
+  double y = static_cast<double>(_out_y.value());
+
+  /* compute the value of z */
+  double logit = _beta_set->logit(_instance);
+
+  /* compute P(Y=1 | X) */
+  double lf = 1 / (1 + exp(-1 * logit));
+
+  return x * (y - lf);
 }
 
 } /* end of namespace Radon */

@@ -29,8 +29,14 @@ private:
 
   /* member functions */
 
-  DataInstance::PtrConst dataInstance(DatasetDescription::PtrConst _dataset,
-                                      uint32_t idx);
+  DataInstance::PtrConst
+  data_instance(DatasetDescription::PtrConst _dataset, uint32_t idx) const;
+
+  /* static functions */
+
+  static double
+  gradient_delta(DataInstance::PtrConst _instance, BetaSet::PtrConst _beta_set,
+                 Observation _in_x, Observation _out_y);
 
   /* data members */
   Vector<double> gradient_;
