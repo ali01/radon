@@ -23,15 +23,18 @@ public:
 
   static Ptr LRClassifierNew(DatasetDescription::PtrConst training_data,
                              size_t _domain_size, size_t _range_size,
-                             uint32_t _epochs=kEpochsDefault) {
-    return new LRClassifier(training_data, _domain_size, _range_size, _epochs);
+                             uint32_t _epochs=kEpochsDefault,
+                             double _learning_rate=kLearningRateDefault) {
+    return new LRClassifier(training_data, _domain_size, _range_size,
+                            _epochs, _learning_rate);
   }
 
   OutputPredictionSet::PtrConst predictionSet() { return NULL; }
 
 private:
   LRClassifier(DatasetDescription::PtrConst training_data,
-               size_t _domain_size, size_t _range_size, uint32_t _epochs);
+               size_t _domain_size, size_t _range_size,
+               uint32_t _epochs, double _learning_rate);
 
   /* data members */
   BetaSet::Ptr beta_;
