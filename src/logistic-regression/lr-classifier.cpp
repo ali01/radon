@@ -14,7 +14,7 @@ LRClassifier::LRClassifier(DatasetDescription::PtrConst _training_data,
   for (uint32_t epoch = 0; epoch < _epochs; ++epoch) {
     /* initialize batch gradient for epoch */
     gradient = Gradient::GradientNew(training_data_, beta_);
-
+    
   }
 }
 

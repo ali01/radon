@@ -15,6 +15,7 @@ Gradient::Gradient(DatasetDescription::PtrConst _dataset,
   /* iterate over each data instance (input vector) in the training dataset,
      and add it's contribution to the gradient vector */
   DataInstance::PtrConst instance;
+  Observation in_x, out_y;
   for (uint32_t vec = 0; vec < _dataset->vectorCount(); ++vec) {
     /* data instance with x_0 = 1 (x_0 is paired with alpha in z) */
     instance = data_instance(_dataset, vec);
@@ -25,7 +26,9 @@ Gradient::Gradient(DatasetDescription::PtrConst _dataset,
        G = x_j(y - 1 / (1 + e^{-z}))
          = x_j(y - P(Y=1 | X)) */
     for (size_t var = 0; var < instance->size(); ++var) {
-
+      in_x = _dataset->inputObservation(vec, var);
+      out_y = _dataset->outputObservation(vec);
+      gradient_[var] += gradient_delta(instance, _beta_set, in_x, out_y);
     }
   }
 }
