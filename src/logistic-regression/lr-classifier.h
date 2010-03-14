@@ -7,7 +7,6 @@
 #include "output-prediction-set.h"
 
 #include "beta-set.h"
-#include "gradient.h"
 
 namespace Radon {
 
@@ -30,12 +29,17 @@ public:
   OutputPredictionSet::PtrConst predictionSet() { return NULL; }
 
 private:
+  typedef DatasetDescription::Instance DataInstance;
+
   LRClassifier(DatasetDescription::PtrConst training_data,
                size_t _domain_size, size_t _range_size, uint32_t _epochs);
 
+  /* member functions */
+  DataInstance::PtrConst dataInstance(DatasetDescription::PtrConst _dataset,
+                                      uint32_t idx);
+
   /* data members */
   BetaSet::Ptr beta_;
-  Gradient::Ptr gradient_;
 
   /* disallowed operations */
   LRClassifier(const LRClassifier&);
