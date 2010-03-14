@@ -10,7 +10,9 @@ using boost::multi_array;
 
 #include <simone/ptr_interface.h>
 #include <simone/vector.h>
+#include <simone/deque.h>
 using Simone::Vector;
+using Simone::Deque;
 
 #include "naive-bayes/frequency.h"
 #include "observation.h"
@@ -23,7 +25,7 @@ public:
   typedef Simone::Ptr<const DatasetDescription> PtrConst;
   typedef Simone::Ptr<DatasetDescription> Ptr;
 
-  typedef Vector<Observation> Instance;
+  typedef Deque<Observation> Instance;
 
   static PtrConst DatasetDescriptionNew(uint32_t data_vectors, uint32_t vars) {
     return new DatasetDescription(data_vectors, vars);

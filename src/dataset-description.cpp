@@ -21,7 +21,7 @@ DatasetDescription::outputObservation(uint32_t data_vector) const {
 
 DatasetDescription::Instance::PtrConst
 DatasetDescription::instance(uint32_t data_vector) const {
-  Instance::Ptr instance = Instance::VectorNew();
+  Instance::Ptr instance = Instance::DequeNew();
 
   /* populate instance with each var's observation */
   for (uint32_t var = 0; var < vars_; ++var)
