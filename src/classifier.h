@@ -18,7 +18,8 @@ public:
   virtual OutputPredictionSet::PtrConst predictionSet() = 0;
 
 protected:
-  Classifier(DatasetDescription::PtrConst _training_data);
+  Classifier(DatasetDescription::PtrConst _training_data,
+             size_t _domain_size, size_t _range_size);
   virtual ~Classifier() {}
 
   /* data members */
@@ -26,8 +27,8 @@ protected:
   DatasetDescription::PtrConst test_data_;
   OutputPredictionSet::Ptr prediction_set_;
 
-  uint32_t domain_size_;
-  uint32_t range_size_;
+  size_t domain_size_;
+  size_t range_size_;
 
 private:
   /* disallowed operations */

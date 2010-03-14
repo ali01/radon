@@ -7,8 +7,9 @@ namespace Radon {
 
 /* constructor trains learning algorithm with TRAINING_DATA */
 NBClassifier::NBClassifier(DatasetDescription::PtrConst training_data,
+                           size_t _domain_size, size_t _range_size,
                            EstMode _mode) :
-  Classifier(training_data)
+  Classifier(training_data, _domain_size, _range_size)
 {
   FrequencyTable::Ptr freq_table;
   JointDistTable::Ptr joint_dist_table;

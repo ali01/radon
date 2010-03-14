@@ -1,6 +1,5 @@
 #include "joint-dist-table.h"
 
-#include "globals.h"
 #include "frequency.h"
 
 namespace Radon {

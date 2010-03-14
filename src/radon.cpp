@@ -6,8 +6,6 @@ using std::cout;
 
 #include <simone/utility.h>
 
-#include "globals.h"
-
 #include "dataset-parser.h"
 #include "dataset-description.h"
 #include "lr-classifier.h"
@@ -18,6 +16,24 @@ using Radon::DatasetDescription;
 using Radon::LRClassifier;
 using Radon::NBClassifier;
 using Radon::OutputPredictionSet;
+
+
+namespace Radon {
+
+/* dataset (e.g. "simple", "heart", "vote") */
+const char *kDataset = "vote";
+
+/* relative or absolute path where dataset files are located */
+const char *kDatasetPath = "../datasets";
+
+const uint32_t kDomainSize = 2;
+const uint32_t kRangeSize = 2;
+
+const char *kTestFlag = "-test";
+const char *kTrainFlag = "-train";
+const char *kExtension = ".txt";
+
+} /* end of namespace Radon */
 
 int main() {
   /* file path string declarations */
@@ -58,11 +74,17 @@ int main() {
                                                  filepath_suffix);
 
   /* initializing Naive Bayes classifier using maximum likelihood estimation */
-  nb_mle = NBClassifier::NBClassifierNew(train_dataset, NBClassifier::kML);
+  nb_mle = NBClassifier::NBClassifierNew(train_dataset,
+                                         Radon::kDomainSize,
+                                         Radon::kRangeSize,
+                                         NBClassifier::kML);
   nb_mle->testDatasetIs(test_dataset);
 
   /* initializing Naive Bayes classifier using laplace estimation */
-  nb_lp = NBClassifier::NBClassifierNew(train_dataset, NBClassifier::kLaplace);
+  nb_lp = NBClassifier::NBClassifierNew(train_dataset,
+                                        Radon::kDomainSize,
+                                        Radon::kRangeSize,
+                                        NBClassifier::kLaplace);
   nb_lp->testDatasetIs(test_dataset);
 
   /* computing predictions for both MLE and Laplace */
