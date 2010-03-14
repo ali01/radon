@@ -16,6 +16,8 @@ public:
     return new Gradient(_domain_size);
   }
 
+  double operator[](const uint32_t& _i) const { return gradient_[_i]; }
+
 private:
   Gradient(size_t _domain_size);
 
