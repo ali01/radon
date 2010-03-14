@@ -27,7 +27,6 @@ private:
   void operator=(const Gradient&);
 };
 
-
 } /* end of namespace Radon */
 
 #endif
