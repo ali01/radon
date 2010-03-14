@@ -5,21 +5,32 @@
 #include <simone/vector.h>
 using Simone::Vector;
 
+#include "../dataset-description.h"
+
+#include "beta-set.h"
+
 namespace Radon {
 
 class Gradient : public Simone::PtrInterface<Gradient> {
 public:
   typedef Simone::Ptr<const Gradient> PtrConst;
-  typedef Simone::Ptr<Gradient> Ptr;
 
-  static Ptr GradientNew(size_t _domain_size) {
-    return new Gradient(_domain_size);
+  static PtrConst GradientNew(DatasetDescription::PtrConst _dataset,
+                              BetaSet::PtrConst _beta_set) {
+    return new Gradient(_dataset, _beta_set);
   }
 
   double operator[](const uint32_t& _i) const { return gradient_[_i]; }
 
 private:
-  Gradient(size_t _domain_size);
+  typedef DatasetDescription::Instance DataInstance;
+
+  Gradient(DatasetDescription::PtrConst _dataset, BetaSet::PtrConst _beta_set);
+
+  /* member functions */
+
+  DataInstance::PtrConst dataInstance(DatasetDescription::PtrConst _dataset,
+                                      uint32_t idx);
 
   /* data members */
   Vector<double> gradient_;
