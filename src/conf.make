@@ -1,4 +1,4 @@
 PROJECT := radon
 CPPFLAGS += -I.
 
-SUBDIRS := simone
+SUBDIRS := logistic-regression naive-bayes simone

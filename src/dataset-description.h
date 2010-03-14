@@ -12,7 +12,7 @@ using boost::multi_array;
 #include <simone/vector.h>
 using Simone::Vector;
 
-#include "frequency.h"
+#include "naive-bayes/frequency.h"
 #include "observation.h"
 
 namespace Radon {

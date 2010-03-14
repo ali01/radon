@@ -1,6 +1,6 @@
 #include "dataset-description.h"
 
-#include "frequency.h"
+#include "naive-bayes/frequency.h"
 
 namespace Radon {
 
