@@ -33,7 +33,7 @@ LRClassifier::predictionSet() {
   if (test_data_ == NULL)
     return prediction_set_;
 
-
+  // TODO
 }
 
 /* static public functions */
@@ -56,6 +56,31 @@ LRClassifier::data_instance(DatasetDescription::PtrConst _dataset,
 
   /* version returned is PtrConst, as it should never again be modified */
   return instance_const;
+}
+
+/* private member functions */
+
+/* returns a prediction for the specified data instance (input vector) */
+OutputPrediction::PtrConst
+LRClassifier::prediction(DataInstance::PtrConst _instance) {
+  double cond_prob = condProb(Observation(1), _instance);
+  // TODO
+}
+
+/* returns the probability P(Y=y, X) where y is the specified observation and
+   X is the specified data instance (input vector) */
+double
+LRClassifier::condProb(const Observation& _out_y,
+                       DataInstance::PtrConst _instance) {
+  double e_z = exp(-1 * beta_->logit(_instance));
+
+  /* Set numerator of P appropriately:
+     P(Y=1 | X) =  1  / (1 + e_z) whereas
+     P(Y=0 | X) = e_z / (1 + e_z) */
+  double numerator = (_out_y.value() == 1) ? 1 : e_z;
+
+  /* from the logistic function */
+  return numerator / (1 + e_z);
 }
 
 } /* end of namespace Radon */

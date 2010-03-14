@@ -30,21 +30,6 @@ BetaSet::betaInc(GradientDelta::PtrConst _delta, double learning_rate) {
     beta_[i] = learning_rate * _delta->element(i);
 }
 
-/* returns the probability P(Y=y, X) where y is the specified observation and
-   X is the specified data instance (input vector) */
-double
-BetaSet::condProb(const Observation& _out_y, DataInstance::PtrConst _instance) {
-  double e_z = exp(-1 * logit(_instance));
-
-  /* Set numerator of P appropriately:
-     P(Y=1 | X) =  1  / (1 + e_z) whereas
-     P(Y=0 | X) = e_z / (1 + e_z) */
-  double numerator = (_out_y.value() == 1) ? 1 : e_z;
-
-  /* from the logistic function */
-  return numerator / (1 + e_z);
-}
-
 double
 BetaSet::logit(DataInstance::PtrConst _instance) const {
   if (beta_.size() != _instance->size()){

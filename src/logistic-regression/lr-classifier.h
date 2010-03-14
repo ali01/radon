@@ -45,7 +45,11 @@ private:
                uint32_t _epochs, double _learning_rate);
 
   /* member functions */
-  // OutputPrediction::PtrConst prediction()
+  OutputPrediction::PtrConst prediction(DataInstance::PtrConst _instance);
+
+  /* returns the probability P(Y=y, X) where y is the specified observation and
+     X is the specified data instance (input vector) */
+  double condProb(const Observation& _out_y, DataInstance::PtrConst _instance);
 
   /* data members */
   BetaSet::Ptr beta_;

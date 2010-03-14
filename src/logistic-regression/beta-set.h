@@ -28,10 +28,6 @@ public:
      its corresponding value in DELTA multiplied by LEARNING_RATE */
   void betaInc(Simone::Ptr<const GradientDelta> _delta, double learning_rate);
 
-  /* returns the probability P(Y=y, X) where y is the specified observation and
-     X is the specified data instance (input vector) */
-  double condProb(const Observation& _out_y, DataInstance::PtrConst _instance);
-
   /* For the given data instance (input vector) returns the value of z,
      computed with the beta parameters in BETA. Note that the z value in
      the logistic function is known as the logit (courtesy of wikipedia) */
