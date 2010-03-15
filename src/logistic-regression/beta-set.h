@@ -5,8 +5,9 @@
 #include <simone/vector.h>
 using Simone::Vector;
 
-#include "../observation.h"
 #include "../dataset-description.h"
+#include "../data-instance.h"
+#include "../observation.h"
 
 namespace Radon {
 
@@ -17,8 +18,6 @@ class BetaSet : public Simone::PtrInterface<BetaSet> {
 public:
   typedef Simone::Ptr<const BetaSet> PtrConst;
   typedef Simone::Ptr<BetaSet> Ptr;
-
-  typedef DatasetDescription::Instance DataInstance;
 
   static Ptr BetaSetNew(size_t _dimensions) {
     return new BetaSet(_dimensions);

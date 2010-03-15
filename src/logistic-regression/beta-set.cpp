@@ -29,7 +29,7 @@ BetaSet::betaInc(GradientDelta::PtrConst _delta, double learning_rate) {
 
 double
 BetaSet::logit(DataInstance::PtrConst _instance) const {
-  if (beta_.size() != _instance->size()){
+  if (beta_.size() != _instance->varCount()){
     string msg = "beta vector and instance size mismatch.";
     throw Simone::RangeException(__FILE__, __LINE__, msg);
   }
@@ -37,8 +37,8 @@ BetaSet::logit(DataInstance::PtrConst _instance) const {
   /* incrementally compute the value of z, given by:
      z = B_0(x_0=1) + B_1(x_1) + B_2(x_2) + ... + B_k(x_k) */
   double x_i, z = 0.0;
-  for (size_t i = 0; i < _instance->size(); ++i) {
-    x_i = _instance->element(i).value();
+  for (size_t i = 0; i < _instance->varCount(); ++i) {
+    x_i = _instance->inputObservation(i).value();
     z += x_i * beta_[i];
   }
 
