@@ -5,11 +5,10 @@
 namespace Radon {
 
 LRClassifier::LRClassifier(DatasetDescription::PtrConst _training_data,
-                           size_t _domain_size, size_t _range_size,
                            uint32_t _epochs, double _learning_rate,
                            double _threshold) :
-  Classifier(_training_data, _domain_size, _range_size),
-  beta_(BetaSet::BetaSetNew(_domain_size)),
+  Classifier(_training_data, kDomainSize, kRangeSize),
+  beta_(BetaSet::BetaSetNew(_training_data->varCount())),
   threshold_(_threshold)
 {
   GradientDelta::PtrConst delta;
@@ -22,28 +21,6 @@ LRClassifier::LRClassifier(DatasetDescription::PtrConst _training_data,
   }
 }
 
-/* static public functions */
-
-/* returns a data instance (that is, a vector of data points or observations)
-   that corresponds to the input vector at index IDX in DATASET */
-LRClassifier::DataInstance::PtrConst
-LRClassifier::data_instance(DatasetDescription::PtrConst _dataset,
-                            uint32_t idx) {
-  DataInstance::PtrConst instance_const = _dataset->instance(idx);
-
-  /* note that, for the purpose of logistic regression, the length of a data
-     instance vector is equal to |X| plus one; the first value of the vector is
-     always 1 and is there to pair up with alpha in the expression for z (which
-     appears in the logistic function) */
-
-  /* const_cast the data instance and push 1 as the first observation */
-  DataInstance::Ptr instance = const_cast<DataInstance *>(instance_const.ptr());
-  instance->pushFront(Observation(1));
-
-  /* version returned is PtrConst, as it should never again be modified */
-  return instance_const;
-}
-
 /* private member functions */
 
 /* overrides pure virtual function in derived class;
@@ -54,7 +31,7 @@ LRClassifier::prediction(DatasetDescription::PtrConst _dataset,
   double cond_prob;
   Observation pd_value;
   OutputPrediction::PtrConst pd;
-  DataInstance::PtrConst instance = data_instance(_dataset, _input_vector);
+  DataInstance::PtrConst instance = _dataset->instance(_input_vector);
 
   /* compute the conditional probability P(Y=1 | X)
      where X is the input vector INSTANCE */

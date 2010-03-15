@@ -31,22 +31,20 @@ public:
      1 or 0 for the output variable */
   static const double kThresholdDefault = 0.5;
 
+  /* LRClassifier currently assumes domain and ranges of {0:1} */
+  static const double kRangeSize = 2;
+  static const double kDomainSize = 2;
+
   static Ptr LRClassifierNew(DatasetDescription::PtrConst training_data,
-                             size_t _domain_size, size_t _range_size,
                              uint32_t _epochs=kEpochsDefault,
                              double _learning_rate=kLearningRateDefault,
                              double _threshold=kThresholdDefault) {
-    return new LRClassifier(training_data, _domain_size, _range_size,
-                            _epochs, _learning_rate, _threshold);
+    return new LRClassifier(training_data, _epochs, _learning_rate, _threshold);
   }
 
-  /* static public functions */
-  static DataInstance::PtrConst
-  data_instance(DatasetDescription::PtrConst _dataset, uint32_t idx);
-
 private:
-  LRClassifier(DatasetDescription::PtrConst training_data,
-               size_t _domain_size, size_t _range_size, uint32_t _epochs,
+
+  LRClassifier(DatasetDescription::PtrConst training_data, uint32_t _epochs,
                double _learning_rate, double _threshold);
 
   /* member functions */
