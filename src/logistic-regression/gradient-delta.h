@@ -20,8 +20,11 @@ public:
     return new GradientDelta(_dataset, _beta_set);
   }
 
+  /* number of gradient components */
   size_t size() const { return gradient_.size(); }
-  double element(uint32_t _i) const { return gradient_[_i]; }
+
+  /* value of i-th component */
+  double component(uint32_t _i) const { return gradient_[_i]; }
 
 private:
   typedef DatasetDescription::Instance DataInstance;

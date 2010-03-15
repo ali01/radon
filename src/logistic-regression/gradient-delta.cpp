@@ -7,20 +7,16 @@ namespace Radon {
 
 GradientDelta::GradientDelta(DatasetDescription::PtrConst _dataset,
                              BetaSet::PtrConst _beta_set) {
-  /* initialize values of gradient vector using stub value;
-     note that the size of the gradient vector is |X| + 1 because
-     gradient_[0] is reserved for alpha in the expression for z;
-     z = B_0 + B_1(x_1) + B_2(x_2) + ... + B_k(x_k) */
-  for (size_t i = 0; i < _dataset->varCount() + 1; ++i)
+  /* initialize values of gradient delta vector using stub value; */
+  for (size_t i = 0; i < _dataset->varCount(); ++i)
     gradient_.pushBack(0.0);
 
   /* iterate over each data instance (input vector) in the training dataset,
      and add it's contribution to the gradient vector */
-  DataInstance::PtrConst instance;
   Observation in_x, out_y;
+  DataInstance::PtrConst instance;
   for (uint32_t vec = 0; vec < _dataset->vectorCount(); ++vec) {
-    /* data instance with x_0 = 1 (x_0 is paired with alpha in z) */
-    instance = LRClassifier::data_instance(_dataset, vec);
+    instance = _dataset->instance(vec);
 
     /* iterate over each observation in the instance vector and add its
        individual contribution to the batch gradient using the gradient
