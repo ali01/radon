@@ -51,15 +51,28 @@ LRClassifier::data_instance(DatasetDescription::PtrConst _dataset,
 OutputPrediction::PtrConst
 LRClassifier::prediction(DatasetDescription::PtrConst _dataset,
                          uint32_t _input_vector) const {
-  // double cond_prob = condProb(Observation(1), _instance);
-  // TODO
+  double cond_prob;
+  Observation pd_value;
+  OutputPrediction::PtrConst pd;
+  DataInstance::PtrConst instance = data_instance(_dataset, _input_vector);
+
+  /* compute the conditional probability P(Y=1 | X)
+     where X is the input vector INSTANCE */
+  cond_prob = condProb(Observation(1), instance);
+
+  /* compute the value of our prediction based on the value of threshold_ */
+  pd_value = (cond_prob > threshold_) ? Observation(1) : Observation(0);
+
+  pd = OutputPrediction::OutputPredictionNew(_dataset, _input_vector, pd_value);
+
+  return pd;
 }
 
-/* returns the probability P(Y=y, X) where y is the specified observation and
+/* returns the probability P(Y=y | X) where y is the specified observation and
    X is the specified data instance (input vector) */
 double
 LRClassifier::condProb(const Observation& _out_y,
-                       DataInstance::PtrConst _instance) {
+                       DataInstance::PtrConst _instance) const {
   double e_z = exp(-1 * beta_->logit(_instance));
 
   /* Set numerator of P appropriately:

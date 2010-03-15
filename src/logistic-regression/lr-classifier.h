@@ -58,7 +58,8 @@ private:
 
   /* returns the probability P(Y=y, X) where y is the specified observation and
      X is the specified data instance (input vector) */
-  double condProb(const Observation& _out_y, DataInstance::PtrConst _instance);
+  double condProb(const Observation& _out_y,
+                  DataInstance::PtrConst _instance) const;
 
   /* data members */
 
