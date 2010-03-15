@@ -25,7 +25,7 @@ using Radon::LRClassifier;
 namespace Radon {
 
 /* dataset (e.g. "simple", "heart", "vote") */
-const char *kDataset = "heart";
+const char *kDataset = "simple";
 
 /* relative or absolute path where dataset files are located */
 const char *kDatasetPath = "../datasets";

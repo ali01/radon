@@ -28,6 +28,9 @@ public:
      its corresponding value in DELTA multiplied by LEARNING_RATE */
   void betaInc(Simone::Ptr<const GradientDelta> _delta, double learning_rate);
 
+  /* sets the value of the intercept, alpha, used to compute the value of z */
+  void interceptIs(double _intercept) { intercept_ = _intercept; }
+
   double beta(uint32_t idx) const { return beta_[idx]; }
 
   /* For the given data instance (input vector) returns the value of z,
@@ -40,6 +43,7 @@ private:
 
   /* data members */
   Vector<double> beta_;
+  double intercept_;
 
   /* disallowed operations */
   BetaSet(const BetaSet&);

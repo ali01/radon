@@ -8,7 +8,7 @@
 
 namespace Radon {
 
-BetaSet::BetaSet(size_t _dimensions) {
+BetaSet::BetaSet(size_t _dimensions) : intercept_(0.0) {
   /* initialize values of beta-set vector to zero; */
   for (size_t i = 0; i < _dimensions; ++i)
     beta_.pushBack(0.0);
@@ -42,7 +42,7 @@ BetaSet::logit(DataInstance::PtrConst _instance) const {
     z += x_i * beta_[i];
   }
 
-  return z;
+  return intercept_ + z;
 }
 
 } /* end of namespace Radon */
