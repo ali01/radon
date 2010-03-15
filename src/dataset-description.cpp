@@ -19,15 +19,9 @@ DatasetDescription::outputObservation(uint32_t data_vector) const {
   return output_[data_vector];
 }
 
-DatasetDescription::Instance::PtrConst
+DataInstance::PtrConst
 DatasetDescription::instance(uint32_t data_vector) const {
-  Instance::Ptr instance = Instance::DequeNew();
-
-  /* populate instance with each var's observation */
-  for (uint32_t var = 0; var < vars_; ++var)
-    instance->pushBack(data_[data_vector][var]);
-
-  return instance;
+  return DataInstance::DataInstanceNew(this, data_vector);
 }
 
 } /* end of namespace Radon */
