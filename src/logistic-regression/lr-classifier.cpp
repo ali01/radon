@@ -19,6 +19,15 @@ LRClassifier::LRClassifier(DatasetDescription::PtrConst _training_data,
     /* update beta with computed delta */
     beta_->betaInc(delta, _learning_rate);
   }
+
+  /* The intercept value in the logit function is equal to the output value,
+     Y, when all input values of X are equal to zero. The probability
+     returned by condProb() with OUT_Y = 1 and an all zero INSTANCE will
+     always be equal to 1/2; therefore, the expected value for the intercept
+     (as would be computed by the prediction() function on an all zero
+     input vector) is 1.0 if threshold is smaller than 0.5 and 0.0 otherwise. */
+  if (threshold_ < 0.5)
+    beta_->interceptIs(1.0);
 }
 
 /* private member functions */
