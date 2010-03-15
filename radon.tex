@@ -75,6 +75,101 @@
    % = Section ~ Problem 1 =
    % =======================
    \section*{Problem 1}
-      
+      An estimate for the value of true $\mu$ from a sample mean, $\bar{X}$,
+      a sample variance, $S^2$, and a number of trials, $n$, is given by the
+      following expression (which evaluates to a range):
+      \begin{align*}
+         \left(
+            \bar{X} - Z_{\alpha / 2} \left(\frac{S}{\sqrt{n}}\right),\;
+            \bar{X} + Z_{\alpha / 2} \left(\frac{S}{\sqrt{n}}\right)
+         \right)
+      \end{align*}
+      \begin{enumerate}
+         \item $\alpha = 0.10$
+            \begin{align*}
+               \left(
+                  447 - 1.645 \left(\frac{19.32}{\sqrt{300}}\right),\;
+                  447 + 1.645 \left(\frac{19.32}{\sqrt{300}}\right)
+               \right)
+            \end{align*}
+            \begin{align*}
+               \boxed{\Big(445.165,\; 448.835\Big)}
+            \end{align*}
+         \item
+            $\alpha = 0.05$
+            \begin{align*}
+               \left(
+                  447 - 2.807 \left(\frac{19.32}{\sqrt{300}}\right),\;
+                  447 + 2.807 \left(\frac{19.32}{\sqrt{300}}\right)
+               \right)
+            \end{align*}
+            \begin{align*}
+               \boxed{\Big(444.814,\; 449.186\Big)}
+            \end{align*}
+         \item
+            $\alpha = 0.01$
+            \begin{align*}
+               \left(
+                  447 - 2.807 \left(\frac{19.32}{\sqrt{300}}\right),\;
+                  447 + 2.807 \left(\frac{19.32}{\sqrt{300}}\right)
+               \right)
+            \end{align*}
+            \begin{align*}
+               \boxed{\Big(444.127,\; 449.873\Big)}
+            \end{align*}
+      \end{enumerate}
 
+      \newpage
+      % =======================
+      % = Section ~ Problem 2 =
+      % =======================
+      \section*{Problem 2}
+         \begin{enumerate}
+            \item
+               Approach: compute log-likelihood, differentiate, set
+               equal to zero, and and solve for lambda
+               \begin{align*}
+                  X_i &\sim Exp(\lambda) \pd
+                  f(X_i | \lambda) &= \lambda \cdot e^{-\lambda \cdot x_i} \pd
+                  L(\theta) &=
+                     \prod_{i = 1}^{n} \lambda \cdot e^{-\lambda \cdot x_i} \pd
+                  LL(\theta) &= \sum_{i = 1}^{n}
+                     \ln \big(\lambda \cdot e^{-\lambda \cdot x_i}\big) \pd
+                  &= \sum_{i = 1}^{n} \big(\ln(\lambda) - \lambda \cdot x_i) \pd
+                  &= n \cdot \ln(\lambda) - \lambda \sum_{i=1}^n{x_i} \pd
+                  \frac{\partial LL(\theta)}{\partial \lambda} &=
+                     \frac{n}{\lambda} - \sum_{i = 1}^{n}{x_i} = 0 \pd
+                  \lambda &= \frac{n}{\sum_{i=1}^{n}{x_i}}
+               \end{align*}
+            \item
+               Approach: compute the expected value of the above estimate for
+               lambda. Note that the expected value for any exponential random
+               variable is equal to $\frac{1}{\lambda}$.
+               \begin{align*}
+                  E\left[\frac{n}{\sum_{i=1}^{n}{x_i}}\right] =
+                     \frac{n}{\sum\limits_{i=1}^{n}{E[x_i]}}
+                  = \frac{n}{\sum\limits_{i=1}^{n}{\frac{1}{\lambda}}}
+                  = \frac{n}{n/\lambda}
+                  = \lambda
+               \end{align*}
+               Because the expected value of our estimate for $\lambda$ is equal
+               to $\lambda$, our estimate is unbiased.
+
+               \answer{\text{No}}
+            \item
+               Given (from part \emph{b}) that our estimation for lambda is
+               unbiased, we can be certain that, in the limit as $n$ approaches
+               infinity, the value of our estimate is equal to the true
+               lambda. Therefore, for large enough $n$, the absolute value of
+               the difference between the true lambda and our estimate must be
+               smaller than $\epsilon$, where $\epsilon$ is arbitrarily small.
+
+               \answer{\text{Yes}}
+         \end{enumerate}
+
+      \newpage
+      % =======================
+      % = Section ~ Problem 3 =
+      % =======================
+      \section*{Problem 3}
 \end{document}
