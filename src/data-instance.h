@@ -21,15 +21,12 @@ public:
   }
 
   /* returns the value of input vector at index COMPONENT_IDX */
-  virtual const Observation& inputObservation(uint32_t component_idx) const;
+  const Observation& inputObservation(uint32_t component_idx) const;
 
   /* returns the expected (correct) output value for this input vector */
-  virtual const Observation& outputObservation() const;
+  const Observation& outputObservation() const;
 
-  virtual uint32_t varCount() const;
-
-protected:
-  DataInstance() : dataset_(NULL), vector_idx_(0) {}
+  uint32_t varCount() const;
 
 private:
   DataInstance(Simone::Ptr<const DatasetDescription> _dataset,
