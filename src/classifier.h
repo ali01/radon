@@ -15,12 +15,23 @@ public:
 
   void testDatasetIs(DatasetDescription::PtrConst _data);
 
-  virtual OutputPredictionSet::PtrConst predictionSet() = 0;
+  /* generates a set of predictions for TEST_DATA (see base class Classifier);
+     calls virtual function prediction() which is overriden by derived
+     classes */
+  OutputPredictionSet::PtrConst predictionSet();
 
 protected:
   Classifier(DatasetDescription::PtrConst _training_data,
              size_t _domain_size, size_t _range_size);
   virtual ~Classifier() {}
+
+  /* member functions */
+
+  /* to be defined by derived classes;
+     computes an output prediction for the given INPUT_VECTOR in DATASET */
+  virtual OutputPrediction::PtrConst
+  prediction(DatasetDescription::PtrConst _dataset,
+             uint32_t _input_vector) const = 0;
 
   /* data members */
   DatasetDescription::PtrConst training_data_;

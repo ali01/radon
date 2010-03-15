@@ -22,22 +22,6 @@ LRClassifier::LRClassifier(DatasetDescription::PtrConst _training_data,
   }
 }
 
-OutputPredictionSet::PtrConst
-LRClassifier::predictionSet() {
-  /* if a prediction set for test_data_ has
-     already been computed and is cached, return it */
-  if (prediction_set_ != NULL)
-    return prediction_set_;
-
-  prediction_set_ = OutputPredictionSet::OutputPredictionSetNew(range_size_);
-
-  /* if test_data_ is NULL, return an empty prediction */
-  if (test_data_ == NULL)
-    return prediction_set_;
-
-  // TODO
-}
-
 /* static public functions */
 
 /* returns a data instance (that is, a vector of data points or observations)
@@ -62,10 +46,12 @@ LRClassifier::data_instance(DatasetDescription::PtrConst _dataset,
 
 /* private member functions */
 
-/* returns a prediction for the specified data instance (input vector) */
+/* overrides pure virtual function in derived class;
+   computes an output prediction for the given INPUT_VECTOR in DATASET */
 OutputPrediction::PtrConst
-LRClassifier::prediction(DataInstance::PtrConst _instance) {
-  double cond_prob = condProb(Observation(1), _instance);
+LRClassifier::prediction(DatasetDescription::PtrConst _dataset,
+                         uint32_t _input_vector) const {
+  // double cond_prob = condProb(Observation(1), _instance);
   // TODO
 }
 

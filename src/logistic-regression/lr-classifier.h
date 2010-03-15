@@ -40,8 +40,6 @@ public:
                             _epochs, _learning_rate, _threshold);
   }
 
-  OutputPredictionSet::PtrConst predictionSet();
-
   /* static public functions */
   static DataInstance::PtrConst
   data_instance(DatasetDescription::PtrConst _dataset, uint32_t idx);
@@ -52,7 +50,11 @@ private:
                double _learning_rate, double _threshold);
 
   /* member functions */
-  OutputPrediction::PtrConst prediction(DataInstance::PtrConst _instance);
+
+  /* overrides pure virtual function in derived class;
+     computes an output prediction for the given INPUT_VECTOR in DATASET */
+  OutputPrediction::PtrConst prediction(DatasetDescription::PtrConst _dataset,
+                                        uint32_t _input_vector) const;
 
   /* returns the probability P(Y=y, X) where y is the specified observation and
      X is the specified data instance (input vector) */

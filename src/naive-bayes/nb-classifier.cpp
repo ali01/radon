@@ -47,30 +47,6 @@ NBClassifier::NBClassifier(DatasetDescription::PtrConst training_data,
     out_marginal_.pushBack(joint_dist_[0]->outputMarginal(out_idx));
 }
 
-/* generates a set of predictions for TEST_DATA (see base class Classifier) */
-OutputPredictionSet::PtrConst
-NBClassifier::predictionSet() {
-  /* if a prediction set for test_data_ has
-     already been computed and is cached, return it */
-  if (prediction_set_ != NULL)
-    return prediction_set_;
-
-  prediction_set_ = OutputPredictionSet::OutputPredictionSetNew(range_size_);
-
-  /* if test_data_ is NULL, return an empty prediction */
-  if (test_data_ == NULL)
-    return prediction_set_;
-
-  /* compute prediction set for each input vector in TEST_DATA */
-  OutputPrediction::PtrConst pd;
-  for (uint32_t vec = 0; vec < test_data_->vectorCount(); ++vec) {
-    pd = prediction(test_data_, vec);
-    prediction_set_->pushBack(pd);
-  }
-
-  return prediction_set_;
-}
-
 /* computes an output prediction for the given INPUT_VECTOR in DATASET */
 OutputPrediction::PtrConst
 NBClassifier::prediction(DatasetDescription::PtrConst _dataset,
