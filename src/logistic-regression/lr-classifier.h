@@ -19,17 +19,16 @@ public:
   typedef Simone::Ptr<const LRClassifier> PtrConst;
   typedef Simone::Ptr<LRClassifier> Ptr;
 
-  /* value defines the default number of passes over the data that the algorithm
-     will make in its training phase while learning the parameters of its
-     predictive model */
+  /* default number of passes over the data that the algorithm will make in its
+     training phase while learning the parameters of its predictive model */
   static const uint32_t kEpochsDefault = 1e4;
 
-  /* size of jump step used in each iteration as the algorithm converges on
-     the global maximum of the log-likelihood function of the data */
+  /* default size of jump step used in each iteration as the algorithm converges
+     on the global maximum of the log-likelihood function of the data */
   static const double kLearningRateDefault = 1.0e-4;
 
-  /* probability threshold used to decide whether to predict a value of 1 or 0
-     for the output variable */
+  /* default probability threshold used to decide whether to predict a value of
+     1 or 0 for the output variable */
   static const double kThresholdDefault = 0.5;
 
   static Ptr LRClassifierNew(DatasetDescription::PtrConst training_data,
@@ -60,7 +59,13 @@ private:
   double condProb(const Observation& _out_y, DataInstance::PtrConst _instance);
 
   /* data members */
+
+  /* set of beta parameters used to compute the value of the logistic function
+     on any given data vector */
   BetaSet::Ptr beta_;
+
+  /* probability threshold used to decide whether to predict a value of 1 or
+     0 for the output variable */
   const double threshold_;
 
   /* disallowed operations */
