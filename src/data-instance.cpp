@@ -1,7 +1,6 @@
 #include "data-instance.h"
 
 #include "dataset-description.h"
-#include "zero-data-instance.h"
 
 namespace Radon {
 
