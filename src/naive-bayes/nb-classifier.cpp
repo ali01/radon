@@ -52,9 +52,12 @@ OutputPrediction::PtrConst
 NBClassifier::prediction(DatasetDescription::PtrConst _dataset,
                          uint32_t _input_vector) const {
   OutputPrediction::PtrConst pd;
-  Observation pd_obs = joint_prob_arg_max(_dataset, _input_vector);
 
-  pd = OutputPrediction::OutputPredictionNew(_dataset, _input_vector, pd_obs);
+  /* computing the value that maximizes the joint probability P(X, Y) */
+  Observation pd_val = joint_prob_arg_max(_dataset, _input_vector);
+
+  pd = OutputPrediction::OutputPredictionNew(_dataset, _input_vector, pd_val);
+
   return pd;
 }
 
