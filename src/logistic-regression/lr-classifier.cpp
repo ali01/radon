@@ -6,9 +6,11 @@ namespace Radon {
 
 LRClassifier::LRClassifier(DatasetDescription::PtrConst _training_data,
                            size_t _domain_size, size_t _range_size,
-                           uint32_t _epochs, double _learning_rate) :
+                           uint32_t _epochs, double _learning_rate,
+                           double _threshold) :
   Classifier(_training_data, _domain_size, _range_size),
-  beta_(BetaSet::BetaSetNew(_domain_size))
+  beta_(BetaSet::BetaSetNew(_domain_size)),
+  threshold_(_threshold)
 {
   GradientDelta::PtrConst delta;
   for (uint32_t epoch = 0; epoch < _epochs; ++epoch) {
