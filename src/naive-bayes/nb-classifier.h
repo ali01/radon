@@ -9,7 +9,6 @@
 #include "classifier.h"
 #include "dataset-description.h"
 #include "joint-dist-table.h"
-#include "output-prediction.h"
 #include "probability.h"
 #include "probability-ln.h"
 
@@ -25,6 +24,8 @@ public:
 
   enum EstMode { kML, kLaplace };
 
+  // TODO: make range and domain sizes fixed
+
   static Ptr NBClassifierNew(DatasetDescription::PtrConst training_data,
                              size_t _domain_size, size_t _range_size,
                              EstMode _mode) {
@@ -37,23 +38,20 @@ private:
 
   /* private member functions */
 
-  /* overrides pure virtual function in derived class;
-     computes an output prediction for the given INPUT_VECTOR in DATASET */
-  OutputPrediction::PtrConst prediction(DatasetDescription::PtrConst _dataset,
-                                        uint32_t _input_vector) const;
+  /* overrides pure virtual function in base class;
+     computes an output prediction for the given input vector INSTANCE */
+  Observation prediction(DataInstance::PtrConst _instance) const;
 
-  /* for a given INPUT_VECTOR in DATASET, returns the value of OUTPUT_VALUE
+  /* for a given input vector INSTANCE, returns the value of OUTPUT_VALUE
      that yields the maximum return value possible when passed into
      joint_prob_ln() */
-  Observation joint_prob_arg_max(DatasetDescription::PtrConst _dataset,
-                                 uint32_t _input_vector) const;
+  Observation joint_prob_arg_max(DataInstance::PtrConst _instance) const;
 
   /* returns the natural log of the probability P(X,Y) = P(X | Y) * P(Y) where
-     X = INPUT_VECTOR and Y = OUTPUT_VALUE. Note that, because the Naive Bayes
+     X = INSTANCE and Y = OUTPUT_VALUE. Note that, because the Naive Bayes
      assumption, P(X | Y) is approximated by the product over all P(X_i | Y)
      or the sum of their logs. */
-  ProbabilityLn joint_prob_ln(DatasetDescription::PtrConst _dataset,
-                              uint32_t _input_vector,
+  ProbabilityLn joint_prob_ln(DataInstance::PtrConst _instance,
                               Observation _output_value) const;
 
   /* data members */

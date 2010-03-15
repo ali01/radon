@@ -24,6 +24,7 @@ NBClassifier::NBClassifier(DatasetDescription::PtrConst training_data,
     freq_table = FrequencyTable::FrequencyTableNew(domain_size_, range_size_,
                                                    init_freq);
 
+    // TODO: refactor to use DataInstance
     /* populating frequency table by tracking
        occurences throughout every data vector */
     for (uint32_t vec = 0; vec < training_data_->vectorCount(); ++vec) {
@@ -42,31 +43,25 @@ NBClassifier::NBClassifier(DatasetDescription::PtrConst training_data,
     joint_dist_.pushBack(joint_dist_table);
   }
 
-  /* populating vector of output marginal probabilities, P(Y) */
+  /* populating vector of output marginal probabilities, P(Y);
+     all joint probability distribution tables should have the same P(Y) */
   for (uint32_t out_idx = 0; out_idx < range_size_; ++out_idx)
     out_marginal_.pushBack(joint_dist_[0]->outputMarginal(out_idx));
 }
 
-/* computes an output prediction for the given INPUT_VECTOR in DATASET */
-OutputPrediction::PtrConst
-NBClassifier::prediction(DatasetDescription::PtrConst _dataset,
-                         uint32_t _input_vector) const {
-  OutputPrediction::PtrConst pd;
-
+/* overrides pure virtual function in base class;
+   computes an output prediction for the given input vector INSTANCE */
+Observation
+NBClassifier::prediction(DataInstance::PtrConst _instance) const {
   /* computing the value that maximizes the joint probability P(X, Y) */
-  Observation pd_val = joint_prob_arg_max(_dataset, _input_vector);
-
-  pd = OutputPrediction::OutputPredictionNew(_dataset, _input_vector, pd_val);
-
-  return pd;
+  return joint_prob_arg_max(_instance);;
 }
 
-/* for a given INPUT_VECTOR in DATASET, returns the value of OUTPUT_VALUE
+/* for a given input vector INSTANCE, returns the value of OUTPUT_VALUE
    that yields the maximum return value possible when passed into
    joint_prob_ln() */
 Observation
-NBClassifier::joint_prob_arg_max(DatasetDescription::PtrConst _dataset,
-                                 uint32_t _input_vector) const {
+NBClassifier::joint_prob_arg_max(DataInstance::PtrConst _instance) const {
   Observation arg_max;
 
   /* initialized with a probability of 0.0; ln(0.0) = DOUBLE_MIN */
@@ -75,7 +70,7 @@ NBClassifier::joint_prob_arg_max(DatasetDescription::PtrConst _dataset,
   /* iterate over possible return values of input_cond_ln_product and
      keep track of maximum */
   for (uint32_t out_cond = 0; out_cond < range_size_; ++out_cond) {
-    curr = joint_prob_ln(_dataset, _input_vector, out_cond);
+    curr = joint_prob_ln(_instance, out_cond);
     if (curr > p_max){
       arg_max = out_cond;
       p_max = curr;
@@ -86,12 +81,11 @@ NBClassifier::joint_prob_arg_max(DatasetDescription::PtrConst _dataset,
 }
 
 /* returns the natural log of the probability P(X,Y) = P(X | Y) * P(Y) where
-   X = INPUT_VECTOR and Y = OUTPUT_VALUE. Note that, because of the Naive Bayes
+   X = INSTANCE and Y = OUTPUT_VALUE. Note that, because of the Naive Bayes
    assumption, P(X | Y) is approximated by the product over all P(X_i | Y)
    or the sum of their logs. */
 ProbabilityLn
-NBClassifier::joint_prob_ln(DatasetDescription::PtrConst _dataset,
-                            uint32_t _input_vector,
+NBClassifier::joint_prob_ln(DataInstance::PtrConst _instance,
                             Observation _output_value) const {
   JointDistTable::Ptr joint_dist;
   Observation in_val;
@@ -107,8 +101,8 @@ NBClassifier::joint_prob_ln(DatasetDescription::PtrConst _dataset,
     /* joint probability distribution for variable X_i */
     joint_dist = joint_dist_[dist_idx];
 
-    /* input value X_i at the specified INPUT_VECTOR in DATASET */
-    in_val = _dataset->inputObservation(_input_vector, dist_idx);
+    /* input value X_i in INSTANCE */
+    in_val = _instance->inputObservation(dist_idx);
 
     /* Probability p = P(X_i | Y) */
     p = joint_dist->inputConditional(in_val, _output_value);
