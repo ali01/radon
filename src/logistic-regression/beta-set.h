@@ -20,13 +20,15 @@ public:
 
   typedef DatasetDescription::Instance DataInstance;
 
-  static Ptr BetaSetNew(size_t _domain_size) {
-    return new BetaSet(_domain_size);
+  static Ptr BetaSetNew(size_t _dimensions) {
+    return new BetaSet(_dimensions);
   }
 
   /* increments the beta parameter vector by x, where x is the product of
      its corresponding value in DELTA multiplied by LEARNING_RATE */
   void betaInc(Simone::Ptr<const GradientDelta> _delta, double learning_rate);
+
+  double beta(uint32_t idx) const { return beta_[idx]; }
 
   /* For the given data instance (input vector) returns the value of z,
      computed with the beta parameters in BETA. Note that the z value in
@@ -34,7 +36,7 @@ public:
   double logit(DataInstance::PtrConst _instance) const;
 
 private:
-  BetaSet(size_t _domain_size);
+  BetaSet(size_t _dimensions);
 
   /* data members */
   Vector<double> beta_;
