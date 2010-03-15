@@ -4,6 +4,7 @@
 using std::ifstream;
 
 #include <simone/utility.h>
+#include <simone/exception.h>
 
 #include "observation.h"
 
@@ -44,8 +45,10 @@ DatasetParser::datasetDescription(const string &_filepath) const {
       data_stream.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
   }
 
-  /* TODO: throw exception */
-  assert(!data_stream.fail());
+  if (data_stream.fail()) {
+    string msg = "failed to parse input file";
+    throw Simone::StorageException(__FILE__, __LINE__, msg);
+  }
 
   return dataset;
 }
