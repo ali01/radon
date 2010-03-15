@@ -30,10 +30,6 @@ public:
     return new DatasetDescription(data_vectors, vars);
   }
 
-  // TODO: deprecate API
-  const Observation& inputObservation(uint32_t data_vector, uint32_t var) const;
-  const Observation& outputObservation(uint32_t data_vector) const;
-
   DataInstance::PtrConst instance(uint32_t data_vector) const;
 
   uint32_t vectorCount() const { return data_vectors_; }

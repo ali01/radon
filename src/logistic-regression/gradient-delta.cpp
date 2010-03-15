@@ -24,8 +24,8 @@ GradientDelta::GradientDelta(DatasetDescription::PtrConst _dataset,
        G = x_j(y - 1 / (1 + e^{-z}))
          = x_j(y - P(Y=1 | X)) */
     for (size_t var = 0; var < instance->varCount(); ++var) {
-      in_x = _dataset->inputObservation(vec, var);
-      out_y = _dataset->outputObservation(vec);
+      in_x = instance->inputObservation(var);
+      out_y = instance->outputObservation();
       gradient_[var] += gradient_delta(instance, _beta_set, in_x, out_y);
     }
   }

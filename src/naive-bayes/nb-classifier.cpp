@@ -24,12 +24,14 @@ NBClassifier::NBClassifier(DatasetDescription::PtrConst training_data,
     freq_table = FrequencyTable::FrequencyTableNew(domain_size_, range_size_,
                                                    init_freq);
 
-    // TODO: refactor to use DataInstance
     /* populating frequency table by tracking
        occurences throughout every data vector */
+    DataInstance::PtrConst instance;
     for (uint32_t vec = 0; vec < training_data_->vectorCount(); ++vec) {
-      in_value = training_data_->inputObservation(vec, var);
-      out_value = training_data_->outputObservation(vec);
+      instance = training_data_->instance(vec);
+
+      in_value = instance->inputObservation(var);
+      out_value = instance->outputObservation();
 
       /* incrementing frequency at coorditates
          (in_value, out_value) of frequency table */
