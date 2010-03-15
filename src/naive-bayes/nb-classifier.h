@@ -24,7 +24,7 @@ public:
 
   enum EstMode { kML, kLaplace };
 
-  /* LRClassifier currently assumes domain and ranges of {0:1} */
+  /* NBClassifier currently assumes domain and ranges of {0:1} */
   static const double kRangeSize = 2;
   static const double kDomainSize = 2;
 
