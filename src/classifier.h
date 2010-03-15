@@ -4,6 +4,7 @@
 #include <simone/ptr_interface.h>
 
 #include "dataset-description.h"
+#include "data-instance.h"
 #include "output-prediction-set.h"
 
 namespace Radon {
@@ -29,9 +30,7 @@ protected:
 
   /* to be defined by derived classes;
      computes an output prediction for the given INPUT_VECTOR in DATASET */
-  virtual OutputPrediction::PtrConst
-  prediction(DatasetDescription::PtrConst _dataset,
-             uint32_t _input_vector) const = 0;
+  virtual Observation prediction(DataInstance::PtrConst _instance) const = 0;
 
   /* data members */
   DatasetDescription::PtrConst training_data_;

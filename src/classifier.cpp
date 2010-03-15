@@ -46,10 +46,19 @@ Classifier::predictionSet() {
     return prediction_set_;
 
   /* compute prediction set for each input vector in TEST_DATA */
-  OutputPrediction::PtrConst pd;
+  Observation pd, correct;
+  DataInstance::PtrConst instance;
   for (uint32_t vec = 0; vec < test_data_->vectorCount(); ++vec) {
-    pd = prediction(test_data_, vec);
-    prediction_set_->pushBack(pd);
+    instance = test_data_->instance(vec);
+
+    /* compute predicted value */
+    pd = prediction(instance);
+
+    /* obtain expected (correct) value from the given data */
+    correct = instance->outputObservation();
+
+    /* add values to prediction model */
+    prediction_set_->pushBack(pd, correct);
   }
 
   return prediction_set_;
