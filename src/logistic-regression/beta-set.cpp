@@ -24,7 +24,7 @@ BetaSet::betaInc(GradientDelta::PtrConst _delta, double learning_rate) {
   }
 
   for (size_t i = 0; i < beta_.size(); ++i)
-    beta_[i] = learning_rate * _delta->component(i);
+    beta_[i] += learning_rate * _delta->component(i);
 }
 
 double
