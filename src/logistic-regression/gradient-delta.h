@@ -6,6 +6,7 @@
 using Simone::Vector;
 
 #include "../dataset-description.h"
+#include "../data-instance.h"
 
 #include "beta-set.h"
 
@@ -27,8 +28,6 @@ public:
   double component(uint32_t _i) const { return gradient_[_i]; }
 
 private:
-  typedef DatasetDescription::Instance DataInstance;
-
   GradientDelta(DatasetDescription::PtrConst _dataset,
                 BetaSet::PtrConst _beta_set);
 
