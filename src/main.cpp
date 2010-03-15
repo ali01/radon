@@ -25,7 +25,7 @@ using Radon::LRClassifier;
 namespace Radon {
 
 /* dataset (e.g. "simple", "heart", "vote") */
-const char *kDataset = "vote";
+const char *kDatasetDefault = "simple";
 
 /* relative or absolute path where dataset files are located */
 const char *kDatasetPath = "../datasets";
@@ -39,7 +39,20 @@ const char *kExtension = ".txt";
 
 } /* end of namespace Radon */
 
-int main() {
+/* forward declarations */
+int parse_command_line(int argc, char **argv, string &arg1, bool &help);
+void print_help_message(const char *program_name);
+
+int
+main(int argc, char **argv) {
+  bool help;
+  string arg1;
+  int ret = parse_command_line(argc, argv, arg1, help);
+  if (ret != 0 || help) {
+    print_help_message(argv[0]);
+    return ret;
+  }
+
   /* file path string declarations */
   string filepath_prefix, filepath_suffix;
 
@@ -61,7 +74,7 @@ int main() {
   /* building dataset file path */
   filepath_prefix =  Radon::kDatasetPath;
   filepath_prefix += "/";
-  filepath_prefix += Radon::kDataset;
+  filepath_prefix += arg1;
   filepath_suffix = Radon::kExtension;
 
   /* parsing and initializing datasets */
@@ -85,8 +98,7 @@ int main() {
                                         NBClassifier::kLaplace);
 
   /* initializing Logistic Regression classifier */
-  lr = LRClassifier::LRClassifierNew(train_dataset,
-                                     Radon::kDomainSize, Radon::kRangeSize);
+  lr = LRClassifier::LRClassifierNew(train_dataset);
 
   /* assigning test datasets to classifiers */
   nb_mle->testDatasetIs(test_dataset);
@@ -108,4 +120,51 @@ int main() {
   cout << *lr_pd_set << "\n";
 
   return 0;
+}
+
+int
+parse_command_line(int argc, char **argv, string &arg1, bool &help) {
+  int c;
+  if ((c = getopt(argc, argv, "h")) != -1) {
+    switch(c) {
+      case 'h':
+        /* (help) flag */
+        help = true;
+        return 0;
+      default:
+        /* error */
+        return -1;
+    }
+  }
+
+  if (optind < argc) {
+    /* dataset-name is the first non-option argument */
+    arg1 = argv[optind];
+  } else {
+    /* use default if none is specified */
+    arg1 = Radon::kDatasetDefault;
+  }
+
+  if (optind + 1 < argc) {
+    /* too many non-option arguments specified */
+    return -1;
+  }
+
+  return 0;
+}
+
+void print_help_message(const char *program_name) {
+  printf("usage: %s [dataset-name]\n\n", program_name);
+  printf("Arguments:\n");
+  printf("  [dataset-name]\n");
+  printf("    Optional argument that specifies the dataset to be used.\n");
+  printf("    Examples of valid values are: \"vote\", \"heart\", etc.\n");
+  printf("    The default value of <dataset-name> is \"simple\"\n\n");
+  printf("    Note that, for the time being, it is assumed that a\n");
+  printf("    directory called datasets exists immediately above the\n");
+  printf("    program's working directory, and that dataset filenames\n");
+  printf("    are of the form \"<dataset-name>-<flag>.txt\" where\n");
+  printf("    <flag> is either \"train\" or \"test\"\n\n");
+  printf("Options:\n");
+  printf("  -h  show this help message and exit\n\n");
 }
