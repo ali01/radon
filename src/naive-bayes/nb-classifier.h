@@ -24,17 +24,17 @@ public:
 
   enum EstMode { kML, kLaplace };
 
-  // TODO: make range and domain sizes fixed
+  /* LRClassifier currently assumes domain and ranges of {0:1} */
+  static const double kRangeSize = 2;
+  static const double kDomainSize = 2;
 
   static Ptr NBClassifierNew(DatasetDescription::PtrConst training_data,
-                             size_t _domain_size, size_t _range_size,
                              EstMode _mode) {
-    return new NBClassifier(training_data, _domain_size, _range_size, _mode);
+    return new NBClassifier(training_data, _mode);
   }
 
 private:
-  NBClassifier(DatasetDescription::PtrConst training_data,
-               size_t _domain_size, size_t _range_size, EstMode _mode);
+  NBClassifier(DatasetDescription::PtrConst training_data, EstMode _mode);
 
   /* private member functions */
 

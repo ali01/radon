@@ -88,14 +88,10 @@ main(int argc, char **argv) {
                                                  filepath_suffix);
 
   /* initializing Naive Bayes classifier using maximum likelihood estimation */
-  nb_mle = NBClassifier::NBClassifierNew(train_dataset,
-                                         Radon::kDomainSize, Radon::kRangeSize,
-                                         NBClassifier::kML);
+  nb_mle = NBClassifier::NBClassifierNew(train_dataset, NBClassifier::kML);
 
   /* initializing Naive Bayes classifier using laplace estimation */
-  nb_lp = NBClassifier::NBClassifierNew(train_dataset,
-                                        Radon::kDomainSize, Radon::kRangeSize,
-                                        NBClassifier::kLaplace);
+  nb_lp = NBClassifier::NBClassifierNew(train_dataset, NBClassifier::kLaplace);
 
   /* initializing Logistic Regression classifier */
   lr = LRClassifier::LRClassifierNew(train_dataset);
