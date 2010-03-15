@@ -15,18 +15,18 @@ OutputPredictionSet::OutputPredictionSet(uint32_t _range_size) {
 }
 
 void
-OutputPredictionSet::pushBack(OutputPrediction::PtrConst _prediction) {
-  Observation predicted = _prediction->predicted();
-  Observation expected = _prediction->expected();
+OutputPredictionSet::pushBack(Observation _prediction, Observation _correct) {
+  /* if a correct value is specified, factor trial into accuracy stats */
+  if (_correct != Observation::kInvalid) {
+    /* increment test count for class */
+    ++tested_[_correct.value()];
 
-  /* increment test count for class */
-  ++tested_[expected.value()];
-
-  /* increment correct count for class */
-  if (predicted == expected) {
-    /* the value of expected identifies the true outcome
-       hence, use as index in our prediction statistics model */
-    ++correct_[expected.value()];
+    /* increment correct count for class */
+    if (_prediction == _correct) {
+      /* the value of expected identifies the true outcome
+         hence, use as index in our prediction statistics model */
+      ++correct_[_correct.value()];
+    }
   }
 
   prediction_.pushBack(_prediction);

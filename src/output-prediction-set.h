@@ -10,7 +10,7 @@ using boost::multi_array;
 #include <simone/vector.h>
 using Simone::Vector;
 
-#include "output-prediction.h"
+#include "observation.h"
 
 namespace Radon {
 
@@ -23,7 +23,8 @@ public:
     return new OutputPredictionSet(_range_size);
   }
 
-  void pushBack(OutputPrediction::PtrConst _prediction);
+  void pushBack(Observation _prediction,
+                Observation _correct=Observation::kInvalid);
 
   friend ostream& operator<<(ostream&, const OutputPredictionSet&);
 
@@ -38,7 +39,7 @@ private:
 
   /* data members */
 
-  Vector<OutputPrediction::PtrConst> prediction_;
+  Vector<Observation> prediction_;
 
   /* prediction set statistics */
   Vector<uint32_t> correct_;
