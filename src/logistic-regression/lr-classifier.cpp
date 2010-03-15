@@ -24,25 +24,20 @@ LRClassifier::LRClassifier(DatasetDescription::PtrConst _training_data,
 /* private member functions */
 
 /* overrides pure virtual function in derived class;
-   computes an output prediction for the given INPUT_VECTOR in DATASET */
-OutputPrediction::PtrConst
-LRClassifier::prediction(DatasetDescription::PtrConst _dataset,
-                         uint32_t _input_vector) const {
+   computes an output prediction for the given input vector INSTANCE */
+Observation
+LRClassifier::prediction(DataInstance::PtrConst _instance) const {
   double cond_prob;
-  Observation pd_value;
-  OutputPrediction::PtrConst pd;
-  DataInstance::PtrConst instance = _dataset->instance(_input_vector);
+  Observation prediction;
 
   /* compute the conditional probability P(Y=1 | X)
      where X is the input vector INSTANCE */
-  cond_prob = condProb(Observation(1), instance);
+  cond_prob = condProb(Observation(1), _instance);
 
   /* compute the value of our prediction based on the value of threshold_ */
-  pd_value = (cond_prob > threshold_) ? Observation(1) : Observation(0);
+  prediction = (cond_prob > threshold_) ? Observation(1) : Observation(0);
 
-  pd = OutputPrediction::OutputPredictionNew(_dataset, _input_vector, pd_value);
-
-  return pd;
+  return prediction;
 }
 
 /* returns the probability P(Y=y | X) where y is the specified observation and

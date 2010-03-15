@@ -5,7 +5,7 @@
 
 #include "classifier.h"
 #include "dataset-description.h"
-#include "output-prediction.h"
+#include "data-instance.h"
 #include "output-prediction-set.h"
 
 #include "beta-set.h"
@@ -13,8 +13,6 @@
 namespace Radon {
 
 class LRClassifier : public Classifier {
-  /* private typedef */
-  typedef DatasetDescription::Instance DataInstance;
 public:
   typedef Simone::Ptr<const LRClassifier> PtrConst;
   typedef Simone::Ptr<LRClassifier> Ptr;
@@ -49,10 +47,9 @@ private:
 
   /* member functions */
 
-  /* overrides pure virtual function in derived class;
+  /* overrides pure virtual function in base class;
      computes an output prediction for the given INPUT_VECTOR in DATASET */
-  OutputPrediction::PtrConst prediction(DatasetDescription::PtrConst _dataset,
-                                        uint32_t _input_vector) const;
+  Observation prediction(DataInstance::PtrConst _instance) const;
 
   /* returns the probability P(Y=y, X) where y is the specified observation and
      X is the specified data instance (input vector) */
