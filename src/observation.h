@@ -1,6 +1,7 @@
 #ifndef VARIABLE_H_PCDL3UT4
 #define VARIABLE_H_PCDL3UT4
 
+#include <stdint.h>
 #include <simone/numeric.h>
 
 namespace Radon {
