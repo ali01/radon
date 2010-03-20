@@ -1,7 +1,7 @@
 #include <string>
 using std::string;
 
-#include <cstdlib>
+#include <cstdio>
 #include <iostream>
 using std::cout;
 
