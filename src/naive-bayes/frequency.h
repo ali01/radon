@@ -1,6 +1,8 @@
 #ifndef DATA_POINT_H_CERUAXL8
 #define DATA_POINT_H_CERUAXL8
 
+#include <stdint.h>
+
 #include <simone/numeric.h>
 
 namespace Radon {

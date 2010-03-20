@@ -172,4 +172,121 @@
       % = Section ~ Problem 3 =
       % =======================
       \section*{Problem 3}
+         Consider the log odds of the probability of $X_i$ for $Y = 1$ and $Y = 0$.
+         \begin{align*}
+            \frac{
+               P(Y=0)\prod\limits_{i = 1}^{n}{P(X_i | Y = 0)}
+            }{
+               P(Y=1)\prod\limits_{i = 1}^{n}{P(X_i | Y = 1)}
+            }
+         \end{align*}
+         If the value of the expression above is greater than one, a Naive Bayes
+         classifier would select $Y = 0$ as a prediction, and $Y = 0$ otherwise.\pd
+         If we take the log of the expression above, we get the following:
+         \begin{gather*}
+            \log\left(
+               \frac{
+                  P(Y=0)\prod\limits_{i = 1}^{n}{P(X_i | Y = 0)}
+               }{
+                  P(Y = 1)\prod\limits_{i = 1}^{n}{P(X_i | Y = 1)}
+               }
+            \right) \pd
+            \log\left(P(Y=0)\prod\limits_{i = 1}^{n}{P(X_i | Y = 0)}\right) -
+            \log\left(P(Y=1)\prod\limits_{i = 1}^{n}{P(X_i | Y = 1)}\right) \pd
+            \log{P(Y = 0)} + \sum_{i=1}^{n}{\log P(X_i | Y=0)} -
+            \log{P(Y = 1)} - \sum_{i=1}^{n}{\log P(X_i | Y = 1)}
+         \end{gather*}
+         Because each variable $X_i$ appears in separate terms of the sum, the above
+         is a linear function of the input variables.
+
+      \newpage
+      \section*{Programming Problem 1}
+         \begin{enumerate}
+            \item
+               Prediction Results (simple-test.txt) $\sim$ Naive Bayes using MLE\\
+               Class 0: tested 2, correctly classified 2\\
+               Class 1: tested 2, correctly classified 2\\
+               Overall: tested 4, correctly classified 4\\
+               Accuracy = 1
+
+               Prediction Results (simple-test.txt) $\sim$
+                  Naive Bayes using Laplace Estimation\\
+               Class 0: tested 2, correctly classified 2\\
+               Class 1: tested 2, correctly classified 2\\
+               Overall: tested 4, correctly classified 4\\
+               Accuracy = 1
+
+            \item
+               Prediction Results (vote-test.txt) $\sim$ Naive Bayes using MLE\\
+               Class 0: tested 52, correctly classified 48\\
+               Class 1: tested 83, correctly classified 76\\
+               Overall: tested 135, correctly classified 124\\
+               Accuracy = 0.918519
+
+               Prediction Results (vote-test.txt) $\sim$
+                  Naive Bayes using Laplace Estimation\\
+               Class 0: tested 52, correctly classified 48\\
+               Class 1: tested 83, correctly classified 76\\
+               Overall: tested 135, correctly classified 124\\
+               Accuracy = 0.918519\
+
+            \item
+               Prediction Results (heart-test.txt) $\sim$ Naive Bayes using MLE \\
+               Class 0: tested 15, correctly classified 10\\
+               Class 1: tested 172, correctly classified 135\\
+               Overall: tested 187, correctly classified 145\\
+               Accuracy = 0.775401
+
+               Prediction Results (heart-test.txt) $\sim$
+                  Naive Bayes using Laplace Estimation\\
+               Class 0: tested 15, correctly classified 10\\
+               Class 1: tested 172, correctly classified 130\\
+               Overall: tested 187, correctly classified 140\\
+               Accuracy = 0.748663
+
+         \end{enumerate}
+
+         \newpage
+         \section*{Programming Problem 2}
+            \begin{enumerate}
+               \item
+                  Prediction Results (simple-test.txt) $\sim$ Logistic Regression\\
+                  Class 0: tested 2, correctly classified 2\\
+                  Class 1: tested 2, correctly classified 2\\
+                  Overall: tested 4, correctly classified 4\\
+                  Accuracy = 1
+
+               \item
+                  Prediction Results (vote-test.txt) $\sim$ Logistic Regression\\
+                  Class 0: tested 52, correctly classified 51\\
+                  Class 1: tested 83, correctly classified 83\\
+                  Overall: tested 135, correctly classified 134\\
+                  Accuracy = 0.992593
+
+                  Logistic regression allows for more flexibility in modeling the
+                  input data. Whereas Naive Bayes attempts to reverse engineer a
+                  prediction from the joint probability distribution of $X$ and $Y$,
+                  logistic regression models the probability of $Y$ given the data
+                  directly.
+
+               \item
+                  Prediction Results (heart-test.txt) $\sim$ Logistic Regression\\
+                  Class 0: tested 15, correctly classified 12\\
+                  Class 1: tested 172, correctly classified 147\\
+                  Overall: tested 187, correctly classified 159\\
+                  Accuracy = 0.850267
+
+               \item
+                  With $10000$ epochs and learning rate of $1\e{-7}$
+
+                  Prediction Results (heart-test.txt) $\sim$ Logistic Regression\\
+                  Class 0: tested 15, correctly classified 7\\
+                  Class 1: tested 172, correctly classified 168\\
+                  Overall: tested 187, correctly classified 175\\
+                  Accuracy = 0.935829
+
+                  With a smaller step size toward the absolute maxima over the concave
+                  log-conditional likelihood function can be determined with greater
+                  precision. As a result, the prediction accuracy is greater.
+            \end{enumerate}
 \end{document}
