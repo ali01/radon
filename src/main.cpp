@@ -1,6 +1,7 @@
 #include <string>
 using std::string;
 
+#include <cstdlib>
 #include <iostream>
 using std::cout;
 
