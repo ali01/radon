@@ -163,6 +163,7 @@ include $(wildcard $(TEST_DEPS))
 # todo: put in some script
 .gitignore:
 	@echo $(PROJECT)   >  $@
+	@echo $(TESTER)    >> $@
 	@echo 'sync.make'  >> $@
 	@echo 'xcode/'     >> $@
 	@echo '.DS_Store'  >> $@
@@ -233,34 +234,26 @@ endif
 # =============================================================================
 # =============================      Cleanup      =============================
 # =============================================================================
-.PHONY: clean clean-deps clean-all
+.PHONY: clean clean-objs clean-deps
 
-clean:
-	rm -f $(OBJS)
-	rm -f $(EXTERNAL_OBJS)
-	rm -f $(TEST_OBJS)
+clean: clean-objs clean-deps
+
+clean-objs:
+	rm -f $(OBJS) $(EXTERNAL_OBJS) $(TEST_OBJS)
+	rm -f $(PROJECT) $(PROJECT).tar.gz $(TESTER)
 	rm -f $(TRASH)
-	rm -f $(PROJECT).tar.gz
-	rm -f $(PROJECT)
-	rm -f $(TESTER)
-	rm -f *.o *~ ._* .DS_Store
+	rm -f *.o **/*.o **/*~ **/._* .DS_Store
 
 clean-deps:
-	rm -f $(DEPS)
-	rm -f $(TEST_DEPS)
-	rm -f *.d
-	rm -f *.d.*
-	rm -f .*.d
-	rm -f .*.d.*
-
-clean-all: clean clean-deps
+	rm -f $(DEPS) $(TEST_DEPS)
+	rm -f *.d **/*.d
 
 # =============================================================================
 # =============================      Release      =============================
 # =============================================================================
 .PHONY: release
 
-release: clean-all
+release: clean
 ifeq ($(DEBUG),)
 	tar -czf ../$(PROJECT).tar.gz -C.. $(shell basename `pwd`)
 else
